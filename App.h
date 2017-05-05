@@ -29,13 +29,15 @@ public:
     GLuint bkgd;
 	GLuint cld;
 	GLuint bkgdHills;
+	GLuint blk;
 	GLuint dog;
     
     
     TexRect* ground;
     TexRect* background;
-	Background* hills;
 	TexRect* cloud;
+	Background* hills;
+	Block* block;
 	Doggo* doggo;
 };
 

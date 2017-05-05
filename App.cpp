@@ -12,12 +12,14 @@ App::App(const char* label, int x, int y, int w, int h): GlutApp(label, x, y, w,
     bkgd = loadTexture("..\\resources\\bkgd.bmp");
 	cld = loadTexture("..\\resources\\cloud.bmp");
 	bkgdHills = loadTexture("..\\resources\\bkgdHills.bmp");
+	blk = loadTexture("..\\resources\\wall.bmp");
 	dog = loadTexture("..\\resources\\monalisa.bmp");
 	#else
 	floor = loadTexture("resources/ground2.bmp");
+	cld = loadTexture("resources/cloud.bmp");
 	bkgd = loadTexture("resources/bkgd.bmp");
 	bkgdHills = loadTexture("resources/bkgdHills.bmp");
-	cld = loadTexture("resources/cloud.bmp");
+	blk = loadTexture("resources/wall.bmp");
 	dog = loadTexture("resources/monalisa.bmp");
 	#endif
     
@@ -25,6 +27,7 @@ App::App(const char* label, int x, int y, int w, int h): GlutApp(label, x, y, w,
     ground = new TexRect(-1.0, -0.9, 2.0, 0.1);
 	cloud = new TexRect(-0.7, 0.7, 0.35, 0.70);
 	hills = new Background(-1.0, -0.6, 2.0, 0.3);
+	block = new Block(-0.25, -0.6, 0.15, 0.3);
 	doggo = new Doggo(-0.5, -0.5, 0.2, 0.4);
 }
 
@@ -71,6 +74,9 @@ void App::draw() {
     
     // Set Color
     glColor3d(1.0, 1.0, 1.0);
+
+	glBindTexture(GL_TEXTURE_2D,blk);
+	block->draw();
     
 	glBindTexture(GL_TEXTURE_2D, dog);
 	doggo->draw();
@@ -80,8 +86,6 @@ void App::draw() {
 
 	glBindTexture( GL_TEXTURE_2D, cld );
     cloud->draw();
-
-	
 
 	glBindTexture( GL_TEXTURE_2D, bkgdHills );
    	hills->draw();    
@@ -143,14 +147,17 @@ void App::idle()
 
 	if (Movement == 1)
 	{
-		hills->updateTexCoords(hills->getTL() - 0.01, hills->getTR() - 0.01);
-		Movement = 0;
+		hills->updateTexCoords(hills->getTL() - 0.005, hills->getTR() - 0.005);
+		block->updateCoords(block->getL() + 0.01, block->getR() + 0.01);
+		//Movement = 0;
 	}
 	if (Movement == 2)
 	{
-		hills->updateTexCoords(hills->getTL() + 0.01, hills->getTR() + 0.01);
-		Movement = 0;
+		hills->updateTexCoords(hills->getTL() + 0.005, hills->getTR() + 0.005);
+		block->updateCoords(block->getL() - 0.01, block->getR() - 0.01);
+		//Movement = 0;
 	}
+	
 	redraw();
 }
 

@@ -41,7 +41,7 @@ void Doggo::gravity()
 void Doggo::jump()
 {
 	y += yMult;
-	yMult *= 0.86;
+	yMult *= 2.60;
 
 	TexRect(x, y, w, h);
 }

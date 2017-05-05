@@ -66,6 +66,8 @@ public:
 
 	float getL() { return xLeft; }
 	float getR() { return xRight; }
+
+	float getT() { return y; }
 };
 
 #endif

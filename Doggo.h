@@ -46,7 +46,15 @@ public:
 	}
 
 	float getY() const { return y; }
-	float getX() const { return x; }
+	float getXL() const { return x; }
+	float getXR() const { return x + w; }
+
+	float getH() const { return h; }
+
+	float getB() const { return y - h; }
+
+	void setY(float v) { y = v; }
+
 };
 
 #endif

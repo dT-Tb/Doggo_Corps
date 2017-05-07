@@ -27,7 +27,11 @@ App::App(const char* label, int x, int y, int w, int h): GlutApp(label, x, y, w,
     ground = new TexRect(-1.0, -0.9, 2.0, 0.1);
 	cloud = new TexRect(-0.7, 0.7, 0.35, 0.70);
 	hills = new Background(-1.0, -0.6, 2.0, 0.3);
+<<<<<<< HEAD
 	block = new Block(-0.25, -0.6, 0.15, 0.3);
+=======
+	block = new Block(0.25, -0.6, 0.15, 0.3);
+>>>>>>> origin/master
 	doggo = new Doggo(-0.5, -0.5, 0.2, 0.4);
 }
 
@@ -145,16 +149,53 @@ void App::idle()
 	}
 
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> origin/master
 	if (Movement == 1)
 	{
 		hills->updateTexCoords(hills->getTL() - 0.005, hills->getTR() - 0.005);
 		block->updateCoords(block->getL() + 0.01, block->getR() + 0.01);
+<<<<<<< HEAD
+=======
+
+		//if( block->contains(doggo->getXR(), block->getR()) 
+		//	&& block->contains(block->getR(), doggo->getXL()) ) // getXL < getR < getXR
+		
+		if (block->getL() <= doggo->getXR() && block->getT() > doggo->getB())
+		{
+			block->updateCoords(block->getL() - 0.01, block->getR() - 0.01);
+		}
+		
+>>>>>>> origin/master
 		//Movement = 0;
 	}
 	if (Movement == 2)
 	{
 		hills->updateTexCoords(hills->getTL() + 0.005, hills->getTR() + 0.005);
 		block->updateCoords(block->getL() - 0.01, block->getR() - 0.01);
+<<<<<<< HEAD
+=======
+
+		//if( block->contains(block->getL(), doggo->getXL()) 
+		//	&& block->contains(doggo->getXR(), block->getL()) ) // getXL < getL < getXR
+		if ((block->getL() <= doggo->getXR() && block->getR() >= doggo->getXL()) && block->getT() > doggo->getB())
+		{
+			//block->updateCoords(block->getL() + 0.01, block->getR() + 0.01);
+			if (doggo->isJumping){
+				doggo->setY(block->getT() + doggo->getH());
+			}
+			else {
+				hills->updateTexCoords(hills->getTL() - 0.005, hills->getTR() - 0.005);
+				block->updateCoords(block->getL() + 0.01, block->getR() + 0.01);
+			}
+		}
+		else {
+			doggo->gravity();
+		}
+
+>>>>>>> origin/master
 		//Movement = 0;
 	}
 	

@@ -12,7 +12,11 @@ PROGRAM = glutapp
 # OPTFLAGS = -g  # for debug
 OPTFLAGS =
 CC       = g++
+<<<<<<< HEAD
 CFLAGS   = -w $(OPTFLAGS)
+=======
+CFLAGS   = -w -std=c++11 $(OPTFLAGS)
+>>>>>>> origin/master
 
 ifeq ($(strip $(OS)),Darwin)
 	LDFLAGS = -framework GLUT -framework OpenGL

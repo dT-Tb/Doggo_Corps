@@ -66,6 +66,11 @@ public:
 
 	float getL() { return xLeft; }
 	float getR() { return xRight; }
+<<<<<<< HEAD
+=======
+
+	float getT() { return y; }
+>>>>>>> origin/master
 };
 
 #endif

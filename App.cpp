@@ -30,6 +30,10 @@ App::App(const char* label, int x, int y, int w, int h): GlutApp(label, x, y, w,
 	block = new Block(-0.25, -0.6, 0.15, 0.3);
 	block = new Block(0.25, -0.6, 0.15, 0.3);
 	doggo = new Doggo(-0.5, -0.5, 0.2, 0.4);
+	
+	left = false;
+	right = false;
+	up = false;
 }
 
 
@@ -111,6 +115,59 @@ void App::mouseDrag(float x, float y){
     // Redraw the scene
     redraw();
 }
+void App::keyPress(unsigned char key) {
+#define ESC 27
+#define SPACEBAR 32
+
+    if (key == ESC) {
+        // Exit the app when Esc key is pressed
+        exit(0);
+    }
+	if (key == SPACEBAR) {
+		doggo->isJumping = 1;
+		doggo->jumpReset = 1;
+	}
+	if (key == 'w') {
+		doggo->isJumping = 1;
+	}
+	/*if (key == 'a'){
+		Movement = 1;
+	}
+	if(key == 'd'){
+		Movement = 2;
+	}
+	*/
+	redraw();
+}
+void App::specialKeyPress(int key)
+{
+	if(key == GLUT_KEY_LEFT)
+	{
+		left = true;
+		right = false;
+		Movement = 1;
+	}
+	else if(key == GLUT_KEY_RIGHT)
+	{
+		right = true;
+		left = false;
+		Movement = 2;
+	}
+}
+void App::specialKeyUp(int key)
+{
+	if(key == GLUT_KEY_LEFT)
+	{
+		left = false;
+		Movement = 0;
+	}
+	else if(key == GLUT_KEY_RIGHT)
+	{
+		right = false;
+		Movement = 0;
+	}
+}
+
 bool App::contains(int m)
 {
 	if(m == 1)
@@ -152,7 +209,7 @@ void App::idle()
 			doggo->jumpReset = 1;
 		}
 	}
-	if (Movement == 1)
+	if (left)
 	{
 		hills->move(Movement);
 		block->updateCoords(block->getL() + 0.01, block->getR() + 0.01);
@@ -161,11 +218,12 @@ void App::idle()
 		
 		if (contains(Movement))
 		{
+			hills->updateTexCoords(hills->getTL() + 0.005, hills->getTR() + 0.005);
 			block->updateCoords(block->getL() - 0.01, block->getR() - 0.01);
 		}
 		//Movement = 0;
 	}
-	if (Movement == 2)
+	if (right)
 	{
 		hills->move(Movement);
 		block->updateCoords(block->getL() - 0.01, block->getR() - 0.01);
@@ -192,27 +250,4 @@ void App::idle()
 	redraw();
 }
 
-void App::keyPress(unsigned char key) {
-#define ESC 27
-#define SPACEBAR 32
 
-    if (key == ESC) {
-        // Exit the app when Esc key is pressed
-        exit(0);
-    }
-	if (key == SPACEBAR) {
-		doggo->isJumping = 1;
-		doggo->jumpReset = 1;
-	}
-	if (key == 'w') {
-		doggo->isJumping = 1;
-	}
-	if (key == 'a') {
-		Movement = doggo->move('a');
-	}
-	if (key == 'd') {
-		Movement = doggo->move('d');
-	}
-
-	redraw();
-}

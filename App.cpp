@@ -27,11 +27,8 @@ App::App(const char* label, int x, int y, int w, int h): GlutApp(label, x, y, w,
     ground = new TexRect(-1.0, -0.9, 2.0, 0.1);
 	cloud = new TexRect(-0.7, 0.7, 0.35, 0.70);
 	hills = new Background(-1.0, -0.6, 2.0, 0.3);
-<<<<<<< HEAD
 	block = new Block(-0.25, -0.6, 0.15, 0.3);
-=======
 	block = new Block(0.25, -0.6, 0.15, 0.3);
->>>>>>> origin/master
 	doggo = new Doggo(-0.5, -0.5, 0.2, 0.4);
 }
 
@@ -46,21 +43,12 @@ GLuint App::loadTexture(const char *filename) {
     
     // Pixel alignment: each row is word aligned (aligned to a 4 byte boundary)
     //    Therefore, no need to call glPixelStore( GL_UNPACK_ALIGNMENT, ... );
-    
-    
     glGenTextures( 1, &texture_id );
     glBindTexture( GL_TEXTURE_2D, texture_id );
-    
-    
-
-    
-    
     gluBuild2DMipmaps(GL_TEXTURE_2D, 3, theTexMap.GetNumCols(), theTexMap.GetNumRows(),
                       GL_RGB, GL_UNSIGNED_BYTE, theTexMap.ImageData() );
 
-	
-	
-    return texture_id;
+	 return texture_id;
     
 }
 
@@ -123,6 +111,23 @@ void App::mouseDrag(float x, float y){
     // Redraw the scene
     redraw();
 }
+bool App::contains(int m)
+{
+	if(m == 1)
+	{
+		if(block->getL() <= doggo->getXR() && block->getY() > doggo->getB())
+			return 1;
+		else
+			return 0;
+	}
+	else if(m == 2)
+	{
+		if ((block->getL() <= doggo->getXR() && block->getR() >= doggo->getXL()) && block->getY() > doggo->getB())
+			return 1;
+		else
+			return 0;
+	}
+}
 
 /*void App::glutSpecialFunc(void(*func)(int key, int x, int y))
 {
@@ -137,7 +142,7 @@ void App::idle()
 
 	if(doggo->isJumping)
 	{
-		if(doggo->getY() <= 0.11 && !doggo->jumpReset)
+		if(doggo->getY() <= 0.045 && !doggo->jumpReset)
 		{
 			doggo->jump();
 		}
@@ -147,44 +152,30 @@ void App::idle()
 			doggo->jumpReset = 1;
 		}
 	}
-
-
-<<<<<<< HEAD
-=======
-
->>>>>>> origin/master
 	if (Movement == 1)
 	{
-		hills->updateTexCoords(hills->getTL() - 0.005, hills->getTR() - 0.005);
+		hills->move(Movement);
 		block->updateCoords(block->getL() + 0.01, block->getR() + 0.01);
-<<<<<<< HEAD
-=======
-
 		//if( block->contains(doggo->getXR(), block->getR()) 
 		//	&& block->contains(block->getR(), doggo->getXL()) ) // getXL < getR < getXR
 		
-		if (block->getL() <= doggo->getXR() && block->getT() > doggo->getB())
+		if (contains(Movement))
 		{
 			block->updateCoords(block->getL() - 0.01, block->getR() - 0.01);
 		}
-		
->>>>>>> origin/master
 		//Movement = 0;
 	}
 	if (Movement == 2)
 	{
-		hills->updateTexCoords(hills->getTL() + 0.005, hills->getTR() + 0.005);
+		hills->move(Movement);
 		block->updateCoords(block->getL() - 0.01, block->getR() - 0.01);
-<<<<<<< HEAD
-=======
-
 		//if( block->contains(block->getL(), doggo->getXL()) 
 		//	&& block->contains(doggo->getXR(), block->getL()) ) // getXL < getL < getXR
-		if ((block->getL() <= doggo->getXR() && block->getR() >= doggo->getXL()) && block->getT() > doggo->getB())
+		if (contains(Movement))
 		{
 			//block->updateCoords(block->getL() + 0.01, block->getR() + 0.01);
 			if (doggo->isJumping){
-				doggo->setY(block->getT() + doggo->getH());
+				doggo->setY(block->getY() + doggo->getH());
 			}
 			else {
 				hills->updateTexCoords(hills->getTL() - 0.005, hills->getTR() - 0.005);
@@ -195,7 +186,6 @@ void App::idle()
 			doggo->gravity();
 		}
 
->>>>>>> origin/master
 		//Movement = 0;
 	}
 	

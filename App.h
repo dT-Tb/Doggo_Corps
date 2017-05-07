@@ -21,6 +21,7 @@ public:
     void keyPress(unsigned char key);
     void mouseDown(float x, float y);
     void mouseDrag(float x, float y);
+    bool contains(int m);
 	void idle();
     
     GLuint loadTexture(const char* filename);

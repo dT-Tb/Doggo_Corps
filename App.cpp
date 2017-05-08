@@ -232,7 +232,7 @@ void App::specialKeyUp(int key)
 	}
 }
 
-template <typename T> bool App::xCollision(T& block)
+template <typename T> bool App::xCollision(T* block)
 {
      if
      (    ( block->getX() <= doggo->getR() &&
@@ -246,7 +246,7 @@ template <typename T> bool App::xCollision(T& block)
      }
 }
 
-template <typename T> bool App::yCollision(T& block)
+template <typename T> bool App::yCollision(T*block)
 {
      if(doggo->getB() <= block->getY())
           return 1;

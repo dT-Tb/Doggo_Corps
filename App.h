@@ -41,8 +41,8 @@ public:
 	void idle();
 
      // Collision checks for respective dimensions
-     template <typename T> bool xCollision(T&);
-     template <typename T> bool yCollision(T&);
+     template <typename T> bool xCollision(T*);
+     template <typename T> bool yCollision(T*);
 
      GLuint loadTexture(const char* filename);
 

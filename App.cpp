@@ -123,6 +123,27 @@ void App::draw() {
 
 void App::drawTitleScreen()
 {
+     if(titleAnim)
+     {
+          #if defined WIN32
+          title = loadTexture("..\\resources\\title_screen_2.bmp");
+          #else
+          title = loadTexture("resources/title_screen_2.bmp");
+          #endif
+
+          titleAnim = 0;
+     }
+     else
+     {
+          #if defined WIN32
+          title = loadTexture("..\\resources\\title_screen_1.bmp");
+          #else
+          title = loadTexture("resources/title_screen_1.bmp");
+          #endif
+
+          titleAnim = 1;
+     }
+
      glBindTexture(GL_TEXTURE_2D, title);
      titleScreen->draw();
 }

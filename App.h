@@ -12,17 +12,19 @@ class App: public GlutApp {
      // Maintain app state here
      float mx;
      float my;
-public:
-     // Constructor, to initialize state
-     App(const char* label, int x, int y, int w, int h);
 
      // boolean flags to denote current game state
      bool started = 0;
      bool gameOver = 0;
+     bool titleAnim = 0; // for animating the title screen
 
      //boolean flags to denote movement
      bool left = false;
      bool right = false;
+public:
+     // Constructor, to initialize state
+     App(const char* label, int x, int y, int w, int h);
+
 
      // These are the events we want to handle
      void draw();

@@ -25,6 +25,10 @@ private:
     float h;
 
 protected:
+     void setX(float a) { this->x = a; }
+     void setY(float b) { this->y = b; }
+     void setW(float c) { this->w = c; }
+     void setH(float d) { this->h = d; }
 
 public:
     TexRect (float x=0, float y=0, float w=0.5, float h=0.5){
@@ -63,11 +67,6 @@ public:
      float getW() const { return w; }
 	float getR() const { return x + w; }
 	float getB() const { return y - h; }
-
-     void setX(float a) { this->x = a; }
-     void setY(float b) { this->y = b; }
-     void setW(float c) { this->w = c; }
-     void setH(float d) { this->h = d; }
 };
 
 #endif /* TexRect_hpp */

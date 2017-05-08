@@ -6,7 +6,8 @@
 #include "TexRect.hpp"
 #include "Doggo.h"
 #include "Background.h"
-#include "Block.h"
+//#include "Block.h"
+#include "Trampoline.h"
 
 class App: public GlutApp {
      // Maintain app state here
@@ -39,8 +40,8 @@ public:
 	void idle();
 
      // Collision checks for respective dimensions
-     bool xCollision();
-     bool yCollision();
+     template <typename T> bool xCollision(T&);
+     template <typename T> bool yCollision(T&);
 
      GLuint loadTexture(const char* filename);
 
@@ -49,7 +50,7 @@ public:
      GLuint bkgd;
 	GLuint cld;
 	GLuint bkgdHills;
-	GLuint block;
+	GLuint jumpBlock;
 	GLuint dog;
 
      // Title/End Screens
@@ -61,7 +62,7 @@ public:
      TexRect* background;
 	TexRect* cloud;
 	Background* hills;
-	Block* trampoline;
+	Trampoline* trampoline;
 	Doggo* doggo;
 
      // Title/End Objects

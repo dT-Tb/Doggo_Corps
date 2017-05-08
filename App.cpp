@@ -15,7 +15,7 @@ App::App(const char* label, int x, int y, int w, int h): GlutApp(label, x, y, w,
      bkgd = loadTexture("..\\resources\\bkgd.bmp");
 	cld = loadTexture("..\\resources\\cloud.bmp");
 	bkgdHills = loadTexture("..\\resources\\bkgdHills.bmp");
-	block = loadTexture("..\\resources\\wall.bmp");
+	jumpBlock = loadTexture("..\\resources\\wall.bmp");
 	dog = loadTexture("..\\resources\\doggo.bmp");
 
      // Title/End Screens
@@ -28,7 +28,7 @@ App::App(const char* label, int x, int y, int w, int h): GlutApp(label, x, y, w,
 	cld = loadTexture("resources/cloud.bmp");
 	bkgd = loadTexture("resources/bkgd.bmp");
 	bkgdHills = loadTexture("resources/bkgdHills.bmp");
-	block = loadTexture("resources/trampoline.bmp");
+	jumpBlock = loadTexture("resources/trampoline.bmp");
 	dog = loadTexture("resources/doggo.bmp");
 
      // Title/End Screens
@@ -42,7 +42,7 @@ App::App(const char* label, int x, int y, int w, int h): GlutApp(label, x, y, w,
      ground = new TexRect(-1.0, -0.9, 2.0, 0.1);
 	cloud = new TexRect(0.05, 0.7, 0.35, 0.70);
 	hills = new Background(-1.0, -0.6, 2.0, 0.3);
-	trampoline = new Block(0.25, -0.6, 0.23, 0.3);
+	trampoline = new Trampoline(0.25, -0.6, 0.23, 0.3);
 	doggo = new Doggo(-0.5, -0.5, 0.3, 0.4);
 
      // Title/End Screen Objects
@@ -90,7 +90,7 @@ void App::draw() {
     }
     else if(!gameOver)
     {
-     	glBindTexture(GL_TEXTURE_2D,block);
+     	glBindTexture(GL_TEXTURE_2D, jumpBlock);
      	trampoline->draw();
 
      	glBindTexture(GL_TEXTURE_2D, dog);
@@ -226,34 +226,13 @@ void App::specialKeyUp(int key)
 	}
 }
 
-bool App::xCollision()
+template <typename T> bool App::xCollision(T& block)
 {
-	// if(mov == 1) // Moving Left
-	// {
-	// 	if((trampoline->getX() <= doggo->getR() && trampoline->getX() >= doggo->getX())
-     //           && trampoline->getY() > doggo->getB()) {
-	// 		return 1;
-     //      }
-	// 	else{
-	// 		return 0;
-     //      }
-	// }
-	// else if(mov == 2) // Moving Right
-	// {
-	// 	if ( (trampoline->getX() <= doggo->getX() && trampoline->getR() >= doggo->getX() )
-     //           && trampoline->getY() > doggo->getB()) {
-	// 		return 1;
-     //      }
-	// 	else{
-	// 		return 0;
-     //      }
-	// }
-
      if
-     (    ( trampoline->getX() <= doggo->getR() &&
-          trampoline->getX() >= doggo->getX() ) ||
-          ( trampoline->getR() <= doggo->getR() &&
-          trampoline->getR() >= doggo->getX() ))
+     (    ( block->getX() <= doggo->getR() &&
+          block->getX() >= doggo->getX() ) ||
+          ( block->getR() <= doggo->getR() &&
+          block->getR() >= doggo->getX() ))
      {
           return 1;
      }else{
@@ -261,9 +240,9 @@ bool App::xCollision()
      }
 }
 
-bool App::yCollision()
+template <typename T> bool App::yCollision(T& block)
 {
-     if(doggo->getB() <= trampoline->getY())
+     if(doggo->getB() <= block->getY())
           return 1;
      else
           return 0;
@@ -294,12 +273,12 @@ void App::idle()
      		hills->move(Movement);
      		trampoline->updateCoords(trampoline->getX() + 0.01);
 
-     		if (xCollision() && yCollision())
+     		if (xCollision(trampoline) && yCollision(trampoline))
      		{
      			hills->updateTexCoords(hills->getTL() + 0.005, hills->getTR() + 0.005);
                     trampoline->updateCoords(trampoline->getX() - 0.01);
      		}
-               else if(trampoline->getY() <= doggo->getB() && xCollision())
+               else if(trampoline->getY() <= doggo->getB() && xCollision(trampoline))
                {
                     doggo->updateGroundLevel(trampoline->getY() + doggo->getH());
                     doggo->isJumping = 1;
@@ -313,7 +292,7 @@ void App::idle()
      		hills->move(Movement);
      		trampoline->updateCoords(trampoline->getX() - 0.01);
 
-     		if (xCollision() && yCollision())
+     		if (xCollision(trampoline) && yCollision(trampoline))
      		{
                     hills->updateTexCoords(hills->getTL() - 0.005, hills->getTR() - 0.005);
      			trampoline->updateCoords(trampoline->getX() + 0.01);
@@ -326,7 +305,7 @@ void App::idle()
      			// 	trampoline->updateCoords(trampoline->getX());
      			// }
      		}
-               else if(trampoline->getY() <= doggo->getB() && xCollision())
+               else if(trampoline->getY() <= doggo->getB() && xCollision(trampoline))
                {
                     doggo->updateGroundLevel(trampoline->getY() + doggo->getH());
                     doggo->isJumping = 1;

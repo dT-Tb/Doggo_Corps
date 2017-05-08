@@ -8,8 +8,10 @@ class Block : public TexRect
 {
 public:
 	Block(float x, float y, float w, float h);
-	
+
 	void updateCoords(float x_update);
+
+	virtual void event() { }
 };
 
 #endif

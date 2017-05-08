@@ -16,12 +16,18 @@ public:
      // Constructor, to initialize state
      App(const char* label, int x, int y, int w, int h);
 
+     // boolean flags to denote current game state
+     bool started = 0;
+     bool gameOver = 0;
+
      //boolean flags to denote movement
      bool left = false;
      bool right = false;
 
      // These are the events we want to handle
      void draw();
+     void drawTitleScreen();
+     void drawEndScreen();
      void keyPress(unsigned char key);
      void keyUp(unsigned char key){}
      void mouseDown(float x, float y);
@@ -36,20 +42,29 @@ public:
 
      GLuint loadTexture(const char* filename);
 
+     // Environment
      GLuint floor;
      GLuint bkgd;
 	GLuint cld;
 	GLuint bkgdHills;
-	GLuint blk;
+	GLuint block;
 	GLuint dog;
 
+     // Title/End Screens
+     GLuint title;
+     GLuint end;
 
-    TexRect* ground;
-    TexRect* background;
+     // Environment Objects
+     TexRect* ground;
+     TexRect* background;
 	TexRect* cloud;
 	Background* hills;
-	Block* block;
+	Block* trampoline;
 	Doggo* doggo;
+
+     // Title/End Objects
+     TexRect* titleScreen;
+     TexRect* endScreen;
 };
 
 #endif

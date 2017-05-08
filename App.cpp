@@ -132,6 +132,12 @@ void App::specialKeyPress(int key)
 		left = false;
 		Movement = 2;
 	}
+	if(key == GLUT_KEY_DOWN)
+	{
+		right = false;
+		left = false;
+		Movement = 0;
+	}
 }
 
 void App::specialKeyUp(int key)

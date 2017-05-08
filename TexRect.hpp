@@ -34,7 +34,6 @@ public:
         this->h = h;
     }
 
-
    virtual void draw(){
         glEnable(GL_TEXTURE_2D);
         glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);

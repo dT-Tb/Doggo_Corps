@@ -1,6 +1,6 @@
 #include "App.h"
 #include <cstdio>
-#define MAX_JUMP_HEIGHT 0.5
+#define MAX_JUMP_HEIGHT 0.9
 
 static int Movement = 0;
 
@@ -133,20 +133,17 @@ void App::specialKeyPress(int key)
 		left = false;
 		Movement = 2;
 	}
-
 }
 
 void App::specialKeyUp(int key)
 {
 	if(key == 100)
 	{
-          printf("left key up\n");
 		left = false;
 		Movement = 0;
 	}
 	else if(key == GLUT_KEY_RIGHT)
 	{
-          printf("right key up\n");
 		right = false;
 		Movement = 0;
 	}
@@ -216,16 +213,17 @@ void App::idle()
 	{
 		hills->move(Movement);
 		block->updateCoords(block->getX() + 0.01);
-     //     printf("not colliding\n");
+          // printf("not colliding\n");
 		if (xCollision() && yCollision())
 		{
-          //     printf("colliding L\n");
+               // printf("colliding L\n");
 			hills->updateTexCoords(hills->getTL() + 0.005, hills->getTR() + 0.005);
                block->updateCoords(block->getX() - 0.01);
 		}
-          else if( /* SOME BOO' SHIT */ false)
+          else if(block->getY() <= doggo->getB() && xCollision())
           {
-               /* STAND ON THE DAMN BLOCK */
+               doggo->updateGroundLevel(block->getY() + doggo->getH());
+               doggo->isJumping = 1;
           }
           else
                doggo->updateGroundLevel(-0.5);
@@ -250,9 +248,10 @@ void App::idle()
 			// 	block->updateCoords(block->getX());
 			// }
 		}
-          else if( /* SAME BOO' SHIT I CAN'T FIGURE OUT YET */ false)
+          else if(block->getY() <= doggo->getB() && xCollision())
           {
-               /* JUST STAND ON THE GODDAMN BLOCK PLEASE */
+               doggo->updateGroundLevel(block->getY() + doggo->getH());
+               doggo->isJumping = 1;
           }
           else
                doggo->updateGroundLevel(-0.5);

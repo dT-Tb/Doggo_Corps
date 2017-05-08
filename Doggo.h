@@ -11,7 +11,6 @@ class Doggo : public TexRect
 public:
 	bool isJumping = 0;
 	bool jumpReset = 0;
-	const int DEFAULT_G_LEVEL = -0.5;
 
 	Doggo(float x, float y, float w, float h);
 

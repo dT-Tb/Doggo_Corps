@@ -178,7 +178,7 @@ void App::specialKeyPress(int key)
           doggo->isJumping = 1;
      }
 
-	if(key == GLUT_KEY_LEFT)
+	if(key == GLUT_KEY_LEFT && !left)
 	{
 		left = true;
 		right = false;
@@ -191,7 +191,7 @@ void App::specialKeyPress(int key)
           #endif
 	}
 
-     if(key == GLUT_KEY_RIGHT)
+     if(key == GLUT_KEY_RIGHT && !right)
 	{
 		right = true;
 		left = false;

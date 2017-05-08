@@ -1,13 +1,13 @@
-#ifndef App_hpp
-#define App_hpp
+#ifndef App_h
+#define App_h
 
 #include "GlutApp.h"
 #include "RgbImage.h"
 #include "TexRect.hpp"
 #include "Doggo.h"
 #include "Background.h"
-//#include "Block.h"
 #include "Trampoline.h"
+#include "Chocolate.h"
 
 class App: public GlutApp {
      // Maintain app state here
@@ -16,7 +16,7 @@ class App: public GlutApp {
 
      // boolean flags to denote current game state
      bool started = 0;
-     bool gameOver = 0;
+     bool gameIsOver = 0;
      bool titleAnim = 0; // for animating the title screen
 
      //boolean flags to denote movement
@@ -28,6 +28,7 @@ public:
 
 
      // These are the events we want to handle
+     void gameOver(){ gameIsOver = 1; }
      void draw();
      void drawTitleScreen();
      void drawEndScreen();
@@ -51,6 +52,7 @@ public:
 	GLuint cld;
 	GLuint bkgdHills;
 	GLuint jumpBlock;
+     GLuint killBlock;
 	GLuint dog;
 
      // Title/End Screens
@@ -63,6 +65,7 @@ public:
 	TexRect* cloud;
 	Background* hills;
 	Trampoline* trampoline;
+     Chocolate* chocolate;
 	Doggo* doggo;
 
      // Title/End Objects

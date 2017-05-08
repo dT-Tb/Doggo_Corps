@@ -11,7 +11,7 @@ public:
 
 	void updateCoords(float x_update);
 
-	virtual void event() { }
+	virtual void event(bool top) { }
 };
 
 #endif

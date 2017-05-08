@@ -19,7 +19,7 @@ App::App(const char* label, int x, int y, int w, int h): GlutApp(label, x, y, w,
 	dog = loadTexture("..\\resources\\doggo.bmp");
 
      // Title/End Screens
-     // title = loadTexture("..\\resources\\");
+     title = loadTexture("..\\resources\\title_screen_1.bmp");
      // end = loadTexture("..\\resources\\");
 
 	#else
@@ -32,7 +32,7 @@ App::App(const char* label, int x, int y, int w, int h): GlutApp(label, x, y, w,
 	dog = loadTexture("resources/doggo.bmp");
 
      // Title/End Screens
-     // title = loadTexture("resources/");
+     title = loadTexture("resources/title_screen_1.bmp");
      // end = loadTexture("resources/");
 
 	#endif
@@ -46,7 +46,7 @@ App::App(const char* label, int x, int y, int w, int h): GlutApp(label, x, y, w,
 	doggo = new Doggo(-0.5, -0.5, 0.3, 0.4);
 
      // Title/End Screen Objects
-     // titleScreen = new TexRect(-1, 1, 2, 2);
+     titleScreen = new TexRect(-1, 1, 2, 2);
      // endScreen = new TexRect(-1, 1, 2, 2);
 }
 
@@ -137,14 +137,14 @@ void App::keyPress(unsigned char key) {
 #define ESC 27
 #define SPACEBAR 32
 
-    if (key == ESC) {
-        // Exit the app when Esc key is pressed
-        exit(0);
-    }
-	if (key == SPACEBAR) {
-		left = 0;
-          right = 0;
-          Movement = 0;
+
+     if (key == ESC) {
+          // Exit the app when Esc key is pressed
+          exit(0);
+     }
+
+	if (!started && key == SPACEBAR) {
+          started = 1;
 	}
 
 	redraw();
@@ -182,6 +182,7 @@ void App::specialKeyPress(int key)
           dog = loadTexture("resources/doggo.bmp");
           #endif
 	}
+
 	if(key == GLUT_KEY_DOWN)
 	{
 		right = false;

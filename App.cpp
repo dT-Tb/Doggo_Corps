@@ -15,14 +15,14 @@ App::App(const char* label, int x, int y, int w, int h): GlutApp(label, x, y, w,
 	cld = loadTexture("..\\resources\\cloud.bmp");
 	bkgdHills = loadTexture("..\\resources\\bkgdHills.bmp");
 	blk = loadTexture("..\\resources\\wall.bmp");
-	dog = loadTexture("..\\resources\\monalisa.bmp");
+	dog = loadTexture("..\\resources\\doggo_2.bmp");
 	#else
 	floor = loadTexture("resources/ground2.bmp");
 	cld = loadTexture("resources/cloud.bmp");
 	bkgd = loadTexture("resources/bkgd.bmp");
 	bkgdHills = loadTexture("resources/bkgdHills.bmp");
 	blk = loadTexture("resources/wall.bmp");
-	dog = loadTexture("resources/monalisa.bmp");
+	dog = loadTexture("resources/doggo_2.bmp");
 	#endif
 
     background = new TexRect(-1, 1, 2, 2);

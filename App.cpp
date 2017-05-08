@@ -10,28 +10,27 @@ App::App(const char* label, int x, int y, int w, int h): GlutApp(label, x, y, w,
     my = 0.0;
 
 	#if defined WIN32
-    floor = loadTexture("..\\resources\\ground2.bmp");
-    bkgd = loadTexture("..\\resources\\bkgd.bmp");
+     floor = loadTexture("..\\resources\\ground2.bmp");
+     bkgd = loadTexture("..\\resources\\bkgd.bmp");
 	cld = loadTexture("..\\resources\\cloud.bmp");
 	bkgdHills = loadTexture("..\\resources\\bkgdHills.bmp");
 	blk = loadTexture("..\\resources\\wall.bmp");
-	dog = loadTexture("..\\resources\\doggo_2.bmp");
+	dog = loadTexture("..\\resources\\doggo.bmp");
 	#else
 	floor = loadTexture("resources/ground2.bmp");
 	cld = loadTexture("resources/cloud.bmp");
 	bkgd = loadTexture("resources/bkgd.bmp");
 	bkgdHills = loadTexture("resources/bkgdHills.bmp");
-	blk = loadTexture("resources/wall.bmp");
-	dog = loadTexture("resources/doggo_2.bmp");
+	blk = loadTexture("resources/trampoline.bmp");
+	dog = loadTexture("resources/doggo.bmp");
 	#endif
 
-    background = new TexRect(-1, 1, 2, 2);
-    ground = new TexRect(-1.0, -0.9, 2.0, 0.1);
+     background = new TexRect(-1, 1, 2, 2);
+     ground = new TexRect(-1.0, -0.9, 2.0, 0.1);
 	cloud = new TexRect(-0.7, 0.7, 0.35, 0.70);
 	hills = new Background(-1.0, -0.6, 2.0, 0.3);
-	block = new Block(-0.25, -0.6, 0.15, 0.3);
-	block = new Block(0.25, -0.6, 0.15, 0.3);
-	doggo = new Doggo(-0.5, -0.5, 0.2, 0.4);
+	block = new Block(0.25, -0.6, 0.23, 0.3);
+	doggo = new Doggo(-0.5, -0.5, 0.3, 0.4);
 }
 
 

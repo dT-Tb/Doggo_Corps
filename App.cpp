@@ -27,7 +27,7 @@ App::App(const char* label, int x, int y, int w, int h): GlutApp(label, x, y, w,
 
      background = new TexRect(-1, 1, 2, 2);
      ground = new TexRect(-1.0, -0.9, 2.0, 0.1);
-	cloud = new TexRect(-0.7, 0.7, 0.35, 0.70);
+	cloud = new TexRect(0.05, 0.7, 0.35, 0.70);
 	hills = new Background(-1.0, -0.6, 2.0, 0.3);
 	block = new Block(0.25, -0.6, 0.23, 0.3);
 	doggo = new Doggo(-0.5, -0.5, 0.3, 0.4);

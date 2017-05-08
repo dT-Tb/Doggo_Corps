@@ -126,9 +126,9 @@ void App::specialKeyPress(int key)
 		Movement = 1;
 
           #if defined WIN32
-          dog = loadTexture("..\\resources\\doggo_2.bmp");
+          dog = loadTexture("..\\resources\\Doggo_2.bmp");
           #else
-          dog = loadTexture("resources/doggo_2.bmp");
+          dog = loadTexture("resources/Doggo_2.bmp");
           #endif
 	}
 
@@ -137,7 +137,7 @@ void App::specialKeyPress(int key)
 		right = true;
 		left = false;
 		Movement = 2;
-          
+
           #if defined WIN32
           dog = loadTexture("..\\resources\\doggo.bmp");
           #else
@@ -211,6 +211,7 @@ bool App::yCollision()
 
 void App::idle()
 {
+
 	doggo->gravity();
 
 	if(doggo->isJumping)
@@ -228,6 +229,7 @@ void App::idle()
 
 	if (left)
 	{
+
 		hills->move(Movement);
 		block->updateCoords(block->getX() + 0.01);
           // printf("not colliding\n");

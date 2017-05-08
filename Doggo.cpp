@@ -1,5 +1,5 @@
 #include "Doggo.h"
-#define MAX_JUMP_SPEED 0.2f
+#define MAX_JUMP_SPEED 0.2
 
 //void Doggo::updateVals(float x, float y, float w, float h)
 //{
@@ -9,22 +9,22 @@
 //	this->h = h;
 //}
 
-Doggo::Doggo(float x, float y, float w, float h)
+Doggo::Doggo(float x, float y, float w, float h) : TexRect(x, y, w, h)
 {
-	this->x = x;
-    this->y = y;
-    this->w = w;
-    this->h = h;
-	TexRect(x, y, w, h);
+	setX(x);
+	setY(y);
+	setW(w);
+	setH(h);
+	//TexRect(x, y, w, h);
 
 	yMult = MAX_JUMP_SPEED;
+	groundLevel = -0.5;
 }
 
 void Doggo::gravity()
 {
-	y -= 0.05f;
-
-	if (y < -0.5f)
+	setY(getY() - 0.03);
+	if (getY() <= groundLevel)
 	{
 		if (jumpReset)
 		{
@@ -32,22 +32,29 @@ void Doggo::gravity()
 			yMult = MAX_JUMP_SPEED;
 		}
 
-		y = -0.5;
+		setY(groundLevel);
 	}
 
-	TexRect(x, y, w, h);
+	//TexRect(x, y, w, h);
 }
 
 void Doggo::jump()
 {
-	y += yMult;
-<<<<<<< HEAD
-	yMult *= 0.86;
-=======
-	yMult *= 2.60;
->>>>>>> origin/master
+	if(yMult >= 0)
+	{
+		setY(getY() + yMult);
+		yMult -= MAX_JUMP_SPEED * 0.08;
+	}
+	else{
+		isJumping = 0;
+		jumpReset = 1;
+	}
+	//TexRect(x, y, w, h);
+}
 
-	TexRect(x, y, w, h);
+void Doggo::updateGroundLevel(float glvl)
+{
+	groundLevel = glvl;
 }
 
 int Doggo::move(float a)
@@ -56,6 +63,6 @@ int Doggo::move(float a)
 		return 1;
 	if (a == 'd')
 		return 2;
-	else 
+	else
 		return 0;
 }

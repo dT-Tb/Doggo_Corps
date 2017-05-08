@@ -17,21 +17,15 @@
 #include <GL/freeglut.h>
 #endif
 
-class TexRect {
+class TexRect{
+private:
     float x;
     float y;
     float w;
     float h;
 
 protected:
-	void updateVals(float x, float y, float w, float h)
-	{
-		this->x = x;
-		this->y = y;
-		this->w = w;
-		this->h = h;
-	}
-    
+
 public:
     TexRect (float x=0, float y=0, float w=0.5, float h=0.5){
         this->x = x;
@@ -39,30 +33,42 @@ public:
         this->w = w;
         this->h = h;
     }
-    
-    
-    void draw(){
+
+
+   virtual void draw(){
         glEnable(GL_TEXTURE_2D);
         glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
-        
+
         glBegin(GL_QUADS);
-        
+
         glTexCoord2f(0.0, 0.0);
         glVertex2f(x, y - h);
-        
+
         glTexCoord2f(0.0, 1.0);
         glVertex2f(x, y);
-        
+
         glTexCoord2f(1.0, 1.0);
         glVertex2f(x+w, y);
-        
+
         glTexCoord2f(1.0, 0.0);
         glVertex2f(x+w, y - h);
-        
+
         glEnd();
-        
+
         glDisable(GL_TEXTURE_2D);
     }
+
+	float getX() const { return x; }
+	float getY() const { return y; }
+	float getH() const { return h; }
+     float getW() const { return w; }
+	float getR() const { return x + w; }
+	float getB() const { return y - h; }
+
+     void setX(float a) { this->x = a; }
+     void setY(float b) { this->y = b; }
+     void setW(float c) { this->w = c; }
+     void setH(float d) { this->h = d; }
 };
 
 #endif /* TexRect_hpp */

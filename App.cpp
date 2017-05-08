@@ -1,4 +1,6 @@
 #include "App.h"
+#include <cstdio>
+#define MAX_JUMP_HEIGHT 0.5
 
 static int Movement = 0;
 
@@ -6,7 +8,7 @@ App::App(const char* label, int x, int y, int w, int h): GlutApp(label, x, y, w,
     // Initialize state variables
     mx = 0.0;
     my = 0.0;
-    
+
 	#if defined WIN32
     floor = loadTexture("..\\resources\\ground2.bmp");
     bkgd = loadTexture("..\\resources\\bkgd.bmp");
@@ -22,7 +24,7 @@ App::App(const char* label, int x, int y, int w, int h): GlutApp(label, x, y, w,
 	blk = loadTexture("resources/wall.bmp");
 	dog = loadTexture("resources/monalisa.bmp");
 	#endif
-    
+
     background = new TexRect(-1, 1, 2, 2);
     ground = new TexRect(-1.0, -0.9, 2.0, 0.1);
 	cloud = new TexRect(-0.7, 0.7, 0.35, 0.70);
@@ -30,10 +32,6 @@ App::App(const char* label, int x, int y, int w, int h): GlutApp(label, x, y, w,
 	block = new Block(-0.25, -0.6, 0.15, 0.3);
 	block = new Block(0.25, -0.6, 0.15, 0.3);
 	doggo = new Doggo(-0.5, -0.5, 0.2, 0.4);
-	
-	left = false;
-	right = false;
-	up = false;
 }
 
 
@@ -42,9 +40,9 @@ GLuint App::loadTexture(const char *filename) {
     glClearColor (0.0, 0.0, 0.0, 0.0);
     glShadeModel(GL_FLAT);
     glEnable(GL_DEPTH_TEST);
-    
+
     RgbImage theTexMap( filename );
-    
+
     // Pixel alignment: each row is word aligned (aligned to a 4 byte boundary)
     //    Therefore, no need to call glPixelStore( GL_UNPACK_ALIGNMENT, ... );
     glGenTextures( 1, &texture_id );
@@ -53,27 +51,27 @@ GLuint App::loadTexture(const char *filename) {
                       GL_RGB, GL_UNSIGNED_BYTE, theTexMap.ImageData() );
 
 	 return texture_id;
-    
+
 }
 
 void App::draw() {
 
     // Clear the screen
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    
+
     // Set background color to black
     glClearColor(0.0, 0.0, 0.0, 1.0);
-    
+
     // Set up the transformations stack
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
-    
+
     // Set Color
     glColor3d(1.0, 1.0, 1.0);
 
 	glBindTexture(GL_TEXTURE_2D,blk);
 	block->draw();
-    
+
 	glBindTexture(GL_TEXTURE_2D, dog);
 	doggo->draw();
 
@@ -84,37 +82,20 @@ void App::draw() {
     cloud->draw();
 
 	glBindTexture( GL_TEXTURE_2D, bkgdHills );
-   	hills->draw();    
-    
+   	hills->draw();
+
     glBindTexture( GL_TEXTURE_2D, bkgd );
     background->draw();
-    
-    
+
+
     glDisable(GL_TEXTURE_2D);
-	
+
     // We have been drawing everything to the back buffer
     // Swap the buffers to see the result of what we drew
     glFlush();
     glutSwapBuffers();
 }
 
-void App::mouseDown(float x, float y){
-    // Update app state
-    mx = x;
-    my = y;
-    
-    // Redraw the scene
-    redraw();
-}
-
-void App::mouseDrag(float x, float y){
-    // Update app state
-    mx = x;
-    my = y;
-    
-    // Redraw the scene
-    redraw();
-}
 void App::keyPress(unsigned char key) {
 #define ESC 27
 #define SPACEBAR 32
@@ -124,74 +105,95 @@ void App::keyPress(unsigned char key) {
         exit(0);
     }
 	if (key == SPACEBAR) {
-		doggo->isJumping = 1;
-		doggo->jumpReset = 1;
+		left = 0;
+          right = 0;
+          Movement = 0;
 	}
-	if (key == 'w') {
-		doggo->isJumping = 1;
-	}
-	/*if (key == 'a'){
-		Movement = 1;
-	}
-	if(key == 'd'){
-		Movement = 2;
-	}
-	*/
+
 	redraw();
 }
+
 void App::specialKeyPress(int key)
 {
+     if(key == GLUT_KEY_UP)
+     {
+          doggo->isJumping = 1;
+     }
+
 	if(key == GLUT_KEY_LEFT)
 	{
 		left = true;
 		right = false;
 		Movement = 1;
 	}
-	else if(key == GLUT_KEY_RIGHT)
+
+     if(key == GLUT_KEY_RIGHT)
 	{
 		right = true;
 		left = false;
 		Movement = 2;
 	}
+
 }
+
 void App::specialKeyUp(int key)
 {
-	if(key == GLUT_KEY_LEFT)
+	if(key == 100)
 	{
+          printf("left key up\n");
 		left = false;
 		Movement = 0;
 	}
 	else if(key == GLUT_KEY_RIGHT)
 	{
+          printf("right key up\n");
 		right = false;
 		Movement = 0;
 	}
 }
 
-bool App::contains(int m)
+bool App::xCollision()
 {
-	if(m == 1)
-	{
-		if(block->getL() <= doggo->getXR() && block->getY() > doggo->getB())
-			return 1;
-		else
-			return 0;
-	}
-	else if(m == 2)
-	{
-		if ((block->getL() <= doggo->getXR() && block->getR() >= doggo->getXL()) && block->getY() > doggo->getB())
-			return 1;
-		else
-			return 0;
-	}
+	// if(mov == 1) // Moving Left
+	// {
+	// 	if((block->getX() <= doggo->getR() && block->getX() >= doggo->getX())
+     //           && block->getY() > doggo->getB()) {
+	// 		return 1;
+     //      }
+	// 	else{
+	// 		return 0;
+     //      }
+	// }
+	// else if(mov == 2) // Moving Right
+	// {
+	// 	if ( (block->getX() <= doggo->getX() && block->getR() >= doggo->getX() )
+     //           && block->getY() > doggo->getB()) {
+	// 		return 1;
+     //      }
+	// 	else{
+	// 		return 0;
+     //      }
+	// }
+
+     if
+     (    ( block->getX() <= doggo->getR() &&
+          block->getX() >= doggo->getX() ) ||
+          ( block->getR() <= doggo->getR() &&
+          block->getR() >= doggo->getX() ))
+     {
+          return 1;
+     }else{
+          return 0;
+     }
 }
 
-/*void App::glutSpecialFunc(void(*func)(int key, int x, int y))
+bool App::yCollision()
 {
-	if (GLUT_KEY_UP)
-		doggo->isJumping = 1;
-
-}*/
+     if(doggo->getB() <= block->getY())
+          return 1;
+     else
+          return 0;
+}
 
 void App::idle()
 {
@@ -199,7 +201,7 @@ void App::idle()
 
 	if(doggo->isJumping)
 	{
-		if(doggo->getY() <= 0.045 && !doggo->jumpReset)
+		if(doggo->getY() <= 0.5 && !doggo->jumpReset)
 		{
 			doggo->jump();
 		}
@@ -209,45 +211,82 @@ void App::idle()
 			doggo->jumpReset = 1;
 		}
 	}
+
 	if (left)
 	{
 		hills->move(Movement);
-		block->updateCoords(block->getL() + 0.01, block->getR() + 0.01);
-		//if( block->contains(doggo->getXR(), block->getR()) 
-		//	&& block->contains(block->getR(), doggo->getXL()) ) // getXL < getR < getXR
-		
-		if (contains(Movement))
+		block->updateCoords(block->getX() + 0.01);
+     //     printf("not colliding\n");
+		if (xCollision() && yCollision())
 		{
+          //     printf("colliding L\n");
 			hills->updateTexCoords(hills->getTL() + 0.005, hills->getTR() + 0.005);
-			block->updateCoords(block->getL() - 0.01, block->getR() - 0.01);
+               block->updateCoords(block->getX() - 0.01);
 		}
-		//Movement = 0;
+          else if( /* SOME BOO' SHIT */ false)
+          {
+               /* STAND ON THE DAMN BLOCK */
+          }
+          else
+               doggo->updateGroundLevel(-0.5);
 	}
+
 	if (right)
 	{
 		hills->move(Movement);
-		block->updateCoords(block->getL() - 0.01, block->getR() - 0.01);
-		//if( block->contains(block->getL(), doggo->getXL()) 
-		//	&& block->contains(doggo->getXR(), block->getL()) ) // getXL < getL < getXR
-		if (contains(Movement))
+		block->updateCoords(block->getX() - 0.01);
+          // printf("not colliding\n");
+		if (xCollision() && yCollision())
 		{
-			//block->updateCoords(block->getL() + 0.01, block->getR() + 0.01);
-			if (doggo->isJumping){
-				doggo->setY(block->getY() + doggo->getH());
-			}
-			else {
-				hills->updateTexCoords(hills->getTL() - 0.005, hills->getTR() - 0.005);
-				block->updateCoords(block->getL() + 0.01, block->getR() + 0.01);
-			}
-		}
-		else {
-			doggo->gravity();
-		}
+               // printf("colliding R\n");
+               hills->updateTexCoords(hills->getTL() - 0.005, hills->getTR() - 0.005);
+			block->updateCoords(block->getX() + 0.01);
 
-		//Movement = 0;
+			// if (doggo->isJumping){
+			// 	doggo->setY(block->getY() + doggo->getH());
+			// }
+			// else {
+			// 	hills->updateTexCoords(hills->getTL() - 0.005, hills->getTR() - 0.005);
+			// 	block->updateCoords(block->getX());
+			// }
+		}
+          else if( /* SAME BOO' SHIT I CAN'T FIGURE OUT YET */ false)
+          {
+               /* JUST STAND ON THE GODDAMN BLOCK PLEASE */
+          }
+          else
+               doggo->updateGroundLevel(-0.5);
+
 	}
-	
+
 	redraw();
 }
 
 
+
+
+
+
+
+
+
+
+
+// These are not used -- so far --
+void App::mouseDown(float x, float y){
+    // Update app state
+    mx = x;
+    my = y;
+
+    // Redraw the scene
+    redraw();
+}
+
+void App::mouseDrag(float x, float y){
+    // Update app state
+    mx = x;
+    my = y;
+
+    // Redraw the scene
+    redraw();
+}

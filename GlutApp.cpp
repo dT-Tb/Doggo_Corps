@@ -6,12 +6,12 @@ static GlutApp* app;
 GlutApp::GlutApp(const char* label, int x, int y, int w, int h) {
     // Set app pointer to be the current object
     app = this;
-    
+
     // Setup window position, size, and title
     glutInitWindowPosition(x, y);
     glutInitWindowSize(w, h);
     glutCreateWindow(label);
-    
+
     // Setup some OpenGL options
     glEnable (GL_DEPTH_TEST);
     glEnable (GL_POINT_SMOOTH);
@@ -20,7 +20,7 @@ GlutApp::GlutApp(const char* label, int x, int y, int w, int h) {
     glHint (GL_POINT_SMOOTH_HINT, GL_NICEST);
     glPointSize (4);
     glLineWidth (2);
-    
+
     // Setup GLUT callbacks for different events
     glutDisplayFunc(displayCB);
     glutMouseFunc(mouseCB);
@@ -45,17 +45,17 @@ void GlutApp::windowToScene ( float& x, float &y )
 
 void GlutApp::draw(){
     // Default behavior for a display method
-    
+
     // Clear the screen
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    
+
     // Set background color to black
     glClearColor(0.0, 0.0, 0.0, 1.0);
-    
+
     // Set up the transformations stack
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
-    
+
     // We have been drawing everything to the back buffer
     // Swap the buffers to see the result of what we drew
     glFlush();
@@ -109,7 +109,7 @@ void GlutApp::mouseCB(int b, int s, int x, int y){
     float mx = (float) x;
     float my = (float) y;
     app->windowToScene(mx, my);
-    
+
     // Determine button and state and call appropriate handler
     if (b == 0){
         // Left click
@@ -140,7 +140,7 @@ void GlutApp::motionCB(int x, int y){
     float mx = (float) x;
     float my = (float) y;
     app->windowToScene(mx, my);
-    
+
     // Call drag handler
     app->mouseDrag(mx, my);
 }
@@ -150,7 +150,7 @@ void GlutApp::passiveCB (int x, int y){
     float mx = (float) x;
     float my = (float) y;
     app->windowToScene(mx, my);
-    
+
     // Call mouse motion handler
     app->mouseMove(mx, my);
 }
@@ -160,7 +160,15 @@ void GlutApp::keyboardCB(unsigned char key, int x, int y){
     app->keyPress(key);
 }
 
+void GlutApp::keyboardUpCB(unsigned char key, int x, int y){
+     app->keyUp(key);
+}
+
 void GlutApp::specialCB(int key, int x, int y){
     // When a special key is pressed, call our handler for special keys
     app->specialKeyPress(key);
+}
+
+void GlutApp::specialUpCB(int key, int x, int y){
+     app->specialKeyUp(key);
 }

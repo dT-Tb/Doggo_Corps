@@ -4,10 +4,10 @@
 #include "TexRect.hpp"
 
 class Background : public TexRect
-{ 
+{
 private:
 
-	float texleft, texright, x, y, w, h;
+	float texleft, texright;
 public:
 
 	Background(float x = 0, float y = 0, float w = 0.5, float h = 0.5, float tl = 0, float tr = 0.5);
@@ -15,8 +15,8 @@ public:
 	void updateTexCoords(float tl, float tr);
 	void draw();
 	void move(int m);
+
 	float getTL() { return texleft; }
 	float getTR() { return texright; }
-
 };
 #endif

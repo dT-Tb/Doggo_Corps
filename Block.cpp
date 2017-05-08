@@ -1,19 +1,16 @@
 #include "Block.h"
 
-Block::Block(float x, float y, float w, float h)
+Block::Block(float x, float y, float w, float h) : TexRect(x, y, w, h)
 {
-	this->x = x;
-    this->y = y;
-    this->w = w;
-    this->h = h;
-	
-	xLeft = x;
-	xRight = (x + w);
+	setX(x);
+	setY(y);
+	setW(w);
+	setH(h);
 }
 
-void Block::updateCoords(float xl, float xr) { // move this to correct subclass
-	xLeft = xl;
-	xRight = xr;
+void Block::updateCoords(float x_update)
+{
+	setX(x_update);
 }
 
 bool Block::contains(float obj1, float obj2)
@@ -23,5 +20,3 @@ bool Block::contains(float obj1, float obj2)
 	else
 		return false;
 }
-
-

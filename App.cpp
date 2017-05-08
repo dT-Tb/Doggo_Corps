@@ -124,6 +124,12 @@ void App::specialKeyPress(int key)
 		left = true;
 		right = false;
 		Movement = 1;
+
+          #if defined WIN32
+          dog = loadTexture("..\\resources\\doggo_2.bmp");
+          #else
+          dog = loadTexture("resources/doggo_2.bmp");
+          #endif
 	}
 
      if(key == GLUT_KEY_RIGHT)
@@ -131,6 +137,12 @@ void App::specialKeyPress(int key)
 		right = true;
 		left = false;
 		Movement = 2;
+          
+          #if defined WIN32
+          dog = loadTexture("..\\resources\\doggo.bmp");
+          #else
+          dog = loadTexture("resources/doggo.bmp");
+          #endif
 	}
 	if(key == GLUT_KEY_DOWN)
 	{

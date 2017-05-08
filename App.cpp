@@ -16,7 +16,7 @@ App::App(const char* label, int x, int y, int w, int h): GlutApp(label, x, y, w,
 	cld = loadTexture("..\\resources\\cloud.bmp");
 	bkgdHills = loadTexture("..\\resources\\bkgdHills.bmp");
 	jumpBlock = loadTexture("..\\resources\\wall.bmp");
-     // killBlock = loadTexture("..\\resources\\chocolate.bmp");
+     killBlock = loadTexture("..\\resources\\chocolate.bmp");
 	dog = loadTexture("..\\resources\\doggo.bmp");
 
      // Title/End Screens
@@ -30,7 +30,7 @@ App::App(const char* label, int x, int y, int w, int h): GlutApp(label, x, y, w,
 	bkgd = loadTexture("resources/bkgd.bmp");
 	bkgdHills = loadTexture("resources/bkgdHills.bmp");
 	jumpBlock = loadTexture("resources/trampoline.bmp");
-     // killBlock = loadTexture("resources/chocolate.bmp");
+     killBlock = loadTexture("resources/chocolate.bmp");
      dog = loadTexture("resources/doggo.bmp");
 
      // Title/End Screens
@@ -45,7 +45,7 @@ App::App(const char* label, int x, int y, int w, int h): GlutApp(label, x, y, w,
 	cloud = new TexRect(0.05, 0.7, 0.35, 0.70);
 	hills = new Background(-1.0, -0.6, 2.0, 0.3);
 	trampoline = new Trampoline(0.25, -0.6, 0.23, 0.3);
-     //chocolate = new Chocolate();
+     chocolate = new Chocolate(0.75, -0.55, 0.17, 0.35);
 	doggo = new Doggo(-0.5, -0.5, 0.3, 0.4);
 
      // Title/End Screen Objects
@@ -95,6 +95,9 @@ void App::draw() {
     {
      	glBindTexture(GL_TEXTURE_2D, jumpBlock);
      	trampoline->draw();
+
+          glBindTexture(GL_TEXTURE_2D, killBlock);
+          chocolate->draw();
 
      	glBindTexture(GL_TEXTURE_2D, dog);
      	doggo->draw();
@@ -255,72 +258,69 @@ void App::idle()
 {
      if(started)
      {
-          if(doggo->isDead()){
-               gameOver();
-          }
-          else{
-          	doggo->gravity();
+     	doggo->gravity();
 
-          	if(doggo->isJumping)
-          	{
-          		if(doggo->getY() <= 0.5 && !doggo->jumpReset)
-          		{
-          			doggo->jump();
-          		}
-          		else
-          		{
-          			doggo->isJumping = 0;
-          			doggo->jumpReset = 1;
-          		}
-          	}
+     	if(doggo->isJumping)
+     	{
+     		if(doggo->getY() <= 0.5 && !doggo->jumpReset)
+     		{
+     			doggo->jump();
+     		}
+     		else
+     		{
+     			doggo->isJumping = 0;
+     			doggo->jumpReset = 1;
+     		}
+     	}
 
-          	if (left)
-          	{
+     	if (left)
+     	{
 
-          		hills->move(Movement);
-          		trampoline->updateCoords(trampoline->getX() + 0.01);
+     		hills->move(Movement);
+     		trampoline->updateCoords(trampoline->getX() + 0.01);
+               chocolate->updateCoords(chocolate->getX() + 0.01);
 
-          		if (xCollision(trampoline) && yCollision(trampoline))
-          		{
-          			hills->updateTexCoords(hills->getTL() + 0.005, hills->getTR() + 0.005);
-                         trampoline->updateCoords(trampoline->getX() - 0.01);
-          		}
-                    else if(trampoline->getY() <= doggo->getB() && xCollision(trampoline))
-                    {
-                         doggo->updateGroundLevel(trampoline->getY() + doggo->getH());
-                         doggo->isJumping = 1;
-                    }
-                    else
-                         doggo->updateGroundLevel(-0.5);
-          	}
+     		if (xCollision(trampoline) && yCollision(trampoline))
+     		{
+     			hills->updateTexCoords(hills->getTL() + 0.005, hills->getTR() + 0.005);
+                    trampoline->updateCoords(trampoline->getX() - 0.01);
+     		}
+               else if(trampoline->getY() <= doggo->getB() && xCollision(trampoline))
+               {
+                    doggo->updateGroundLevel(trampoline->getY() + doggo->getH());
+                    doggo->isJumping = 1;
+               }
+               else
+                    doggo->updateGroundLevel(-0.5);
+     	}
 
-          	if (right)
-          	{
-          		hills->move(Movement);
-          		trampoline->updateCoords(trampoline->getX() - 0.01);
+     	if (right)
+     	{
+     		hills->move(Movement);
+     		trampoline->updateCoords(trampoline->getX() - 0.01);
+               chocolate->updateCoords(chocolate->getX() - 0.01);
 
-          		if (xCollision(trampoline) && yCollision(trampoline))
-          		{
-                         hills->updateTexCoords(hills->getTL() - 0.005, hills->getTR() - 0.005);
-          			trampoline->updateCoords(trampoline->getX() + 0.01);
+     		if (xCollision(trampoline) && yCollision(trampoline))
+     		{
+                    hills->updateTexCoords(hills->getTL() - 0.005, hills->getTR() - 0.005);
+     			trampoline->updateCoords(trampoline->getX() + 0.01);
 
-          			// if (doggo->isJumping){
-          			// 	doggo->setY(trampoline->getY() + doggo->getH());
-          			// }
-          			// else {
-          			// 	hills->updateTexCoords(hills->getTL() - 0.005, hills->getTR() - 0.005);
-          			// 	trampoline->updateCoords(trampoline->getX());
-          			// }
-          		}
-                    else if(trampoline->getY() <= doggo->getB() && xCollision(trampoline))
-                    {
-                         doggo->updateGroundLevel(trampoline->getY() + doggo->getH());
-                         doggo->isJumping = 1;
-                    }
-                    else
-                         doggo->updateGroundLevel(-0.5);
-               } // if(right) endif
-     	} // doggo isDead() else endif
+     			// if (doggo->isJumping){
+     			// 	doggo->setY(trampoline->getY() + doggo->getH());
+     			// }
+     			// else {
+     			// 	hills->updateTexCoords(hills->getTL() - 0.005, hills->getTR() - 0.005);
+     			// 	trampoline->updateCoords(trampoline->getX());
+     			// }
+     		}
+               else if(trampoline->getY() <= doggo->getB() && xCollision(trampoline))
+               {
+                    doggo->updateGroundLevel(trampoline->getY() + doggo->getH());
+                    doggo->isJumping = 1;
+               }
+               else
+                    doggo->updateGroundLevel(-0.5);
+          } // if(right) end if
      } // if(started) endif
 
 	redraw();

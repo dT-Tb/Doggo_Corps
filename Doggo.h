@@ -7,7 +7,6 @@
 class Doggo : public TexRect
 {
 	float yMult, groundLevel;
-	bool dead = 0;
 
 public:
 	bool isJumping = 0;
@@ -20,10 +19,8 @@ public:
 	void jump();
 	void updateGroundLevel(float glvl);
 	int move(float a);
-	void die(){ dead = 1; }
 
 	float getGLevel() const { return groundLevel; }
-	bool isDead() const { return dead; }
 };
 
 #endif

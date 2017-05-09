@@ -22,7 +22,7 @@ App::App(const char* label, int x, int y, int w, int h): GlutApp(label, x, y, w,
 
      // Title/End Screens
      title = loadTexture("..\\resources\\title_screen_1.bmp");
-     // end = loadTexture("..\\resources\\");
+     end = loadTexture("..\\resources\\end_screen.bmp");
 
 	#else
      //Game Environment
@@ -37,7 +37,7 @@ App::App(const char* label, int x, int y, int w, int h): GlutApp(label, x, y, w,
 
      // Title/End Screens
      title = loadTexture("resources/title_screen_1.bmp");
-     // end = loadTexture("resources/");
+     end = loadTexture("resources/end_screen.bmp");
 
 	#endif
 
@@ -56,7 +56,7 @@ App::App(const char* label, int x, int y, int w, int h): GlutApp(label, x, y, w,
 
      // Title/End Screen Objects
      titleScreen = new TexRect(-1, 1,  2, 2);
-     // endScreen = new TexRect(-1, 1, 2, 2);
+     endScreen = new TexRect(-1, 1, 2, 2);
 }
 
 
@@ -187,6 +187,15 @@ void App::keyPress(unsigned char key) {
 	if (!started && key == SPACEBAR) {
           started = 1;
 	}
+
+     if(gameIsOver && key == SPACEBAR) {
+          started = 0;
+          gameIsOver = 0;
+     }
+
+     if(key == 'k'){
+          gameOver();
+     }
 
 	redraw();
 }

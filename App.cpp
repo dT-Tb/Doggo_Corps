@@ -38,16 +38,19 @@ App::App(const char* label, int x, int y, int w, int h): GlutApp(label, x, y, w,
      // end = loadTexture("resources/");
 
 	#endif
-
+	
+	
      // Game Environment Objects
      background = new TexRect(-1, 1, 2, 2);
      ground = new TexRect(-1.0, -0.9, 2.0, 0.1);
 	cloud = new TexRect(0.05, 0.7, 0.35, 0.70);
 	hills = new Background(-1.0, -0.6, 2.0, 0.3);
-	trampoline = new Trampoline(0.25, -0.6, 0.23, 0.3);
      chocolate = new Chocolate(0.75, -0.55, 0.17, 0.35);
 	doggo = new Doggo(-0.5, -0.5, 0.3, 0.4);
-
+	
+	B.push_back(new Trampoline(0.25, -0.6, 0.23, 0.3));
+	B.push_back(new Trampoline(0.85, -0.6, 0.23, 0.3));	
+	
      // Title/End Screen Objects
      titleScreen = new TexRect(-1, 1, 2, 2);
      // endScreen = new TexRect(-1, 1, 2, 2);
@@ -93,9 +96,13 @@ void App::draw() {
     }
     else if(!gameIsOver)
     {
-     	glBindTexture(GL_TEXTURE_2D, jumpBlock);
-     	trampoline->draw();
-
+     	//glBindTexture(GL_TEXTURE_2D, jumpBlock);
+     	//trampoline->draw();
+		for(int i = 0; i < B.size(); i++)
+		{
+			glBindTexture(GL_TEXTURE_2D, jumpBlock);
+			B[i]->draw();
+		}
           glBindTexture(GL_TEXTURE_2D, killBlock);
           chocolate->draw();
 
@@ -277,51 +284,56 @@ void App::idle()
      	{
 
      		hills->move(Movement);
-     		trampoline->updateCoords(trampoline->getX() + 0.01);
-               chocolate->updateCoords(chocolate->getX() + 0.01);
-
-     		if (xCollision(trampoline) && yCollision(trampoline))
+     		for(int i = 0; i < B.size(); i++)
      		{
-     			hills->updateTexCoords(hills->getTL() + 0.005, hills->getTR() + 0.005);
-                    trampoline->updateCoords(trampoline->getX() - 0.01);
+     			B[i]->updateCoords(B[i]->getX() + 0.02);
      		}
-               else if(trampoline->getY() <= doggo->getB() && xCollision(trampoline))
-               {
-                    doggo->updateGroundLevel(trampoline->getY() + doggo->getH());
+     		//trampoline->updateCoords(trampoline->getX() + 0.02);
+               chocolate->updateCoords(chocolate->getX() + 0.02);
+			for(int i = 0; i<B.size(); i++)
+			{
+     			if (xCollision(B[i]) && yCollision(B[i]))
+     			{
+     				hills->updateTexCoords(hills->getTL() + 0.005, hills->getTR() + 0.005);
+                   	B[i]->updateCoords(B[i]->getX() - 0.02);
+     			}
+               	else if(B[i]->getY() <= doggo->getB() && xCollision(B[i]))
+               	{
+                    doggo->updateGroundLevel(B[i]->getY() + doggo->getH());
                     doggo->isJumping = 1;
-               }
+               	}
                else
                     doggo->updateGroundLevel(-0.5);
-     	}
+     			}
+     		}
 
      	if (right)
      	{
      		hills->move(Movement);
-     		trampoline->updateCoords(trampoline->getX() - 0.01);
-               chocolate->updateCoords(chocolate->getX() - 0.01);
-
-     		if (xCollision(trampoline) && yCollision(trampoline))
+     		for(int i = 0; i < B.size(); i++)
      		{
-                    hills->updateTexCoords(hills->getTL() - 0.005, hills->getTR() - 0.005);
-     			trampoline->updateCoords(trampoline->getX() + 0.01);
-
-     			// if (doggo->isJumping){
-     			// 	doggo->setY(trampoline->getY() + doggo->getH());
-     			// }
-     			// else {
-     			// 	hills->updateTexCoords(hills->getTL() - 0.005, hills->getTR() - 0.005);
-     			// 	trampoline->updateCoords(trampoline->getX());
-     			// }
+     			B[i]->updateCoords(B[i]->getX() - 0.02);
      		}
-               else if(trampoline->getY() <= doggo->getB() && xCollision(trampoline))
-               {
-                    doggo->updateGroundLevel(trampoline->getY() + doggo->getH());
+     		//trampoline->updateCoords(trampoline->getX() - 0.02);
+               chocolate->updateCoords(chocolate->getX() - 0.02);
+			for(int i = 0; i<B.size(); i++)
+			{
+     			if (xCollision(B[i]) && yCollision(B[i]))
+     			{
+                    hills->updateTexCoords(hills->getTL() - 0.005, hills->getTR() - 0.005);
+     				B[i]->updateCoords(B[i]->getX() + 0.02);
+     			}
+               	else if(B[i]->getY() <= doggo->getB() && xCollision(B[i]))
+               	{
+                    doggo->updateGroundLevel(B[i]->getY() + doggo->getH());
                     doggo->isJumping = 1;
-               }
+               	}
                else
                     doggo->updateGroundLevel(-0.5);
-          } // if(right) end if
-     } // if(started) endif
+          		} // if(right) end if
+          	
+     			} // if(started) endif
+     		}
 
 	redraw();
 } // idle() end function

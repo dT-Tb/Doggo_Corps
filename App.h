@@ -1,6 +1,7 @@
 #ifndef App_h
 #define App_h
-
+#include <iostream>
+#include <vector>
 #include "GlutApp.h"
 #include "RgbImage.h"
 #include "TexRect.hpp"
@@ -9,6 +10,7 @@
 #include "Trampoline.h"
 #include "Chocolate.h"
 
+using namespace std;
 class App: public GlutApp {
      // Maintain app state here
      float mx;
@@ -71,6 +73,9 @@ public:
      // Title/End Objects
      TexRect* titleScreen;
      TexRect* endScreen;
+     
+     //container
+     vector<Block*>B;
 };
 
 #endif

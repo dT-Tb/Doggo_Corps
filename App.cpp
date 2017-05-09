@@ -2,8 +2,8 @@
 #define MAX_JUMP_HEIGHT 0.9
 
 static int Movement = 0;
-static float a = 0.30;
-static float b = 2.60;
+static float a = 0.06;
+static float b = 0.50;
 
 App::App(const char* label, int x, int y, int w, int h): GlutApp(label, x, y, w, h){
     // Initialize state variables
@@ -66,11 +66,10 @@ App::App(const char* label, int x, int y, int w, int h): GlutApp(label, x, y, w,
 	for(int i = 0; i< num.size(); i++)
 	{
 
-		blocks.push_back(new Trampoline(a +=(num[i]/22.0), -0.6, 0.23, 0.3,jumpBlock));
-		blocks.push_back(new Trampoline(a += (num[i]/10.0), -0.6, 0.23, 0.3,jumpBlock));
-		blocks.push_back(new Chocolate(b += (num[i]/15.0), -0.55, 0.17, 0.35, killBlock));
-
-		//std::cout<<num[i]<<std::endl;
+		blocks.push_back(new Trampoline(a +=(num[i]/22.3), -0.6, 0.23, 0.3,jumpBlock));
+          blocks.push_back(new Chocolate(b += (num[i]/16.9), -0.55, 0.17, 0.35, killBlock));
+		blocks.push_back(new Trampoline(a += (num[i]/10.2), -0.6, 0.23, 0.3,jumpBlock));
+          blocks.push_back(new Chocolate(b += (num[i]/4.7), -0.55, 0.17, 0.35, killBlock));
 	}
 
      // Title/End Screen Objects

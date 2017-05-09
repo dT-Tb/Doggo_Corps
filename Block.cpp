@@ -2,10 +2,10 @@
 
 Block::Block(float x, float y, float w, float h, GLuint texture) : TexRect(x, y, w, h)
 {
-	setX(x);
-	setY(y);
-	setW(w);
-	setH(h);
+	// setX(x);
+	// setY(y);
+	// setW(w);
+	// setH(h);
 	this->texture = texture;
 }
 

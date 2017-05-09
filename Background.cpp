@@ -2,10 +2,10 @@
 
 Background::Background(float x, float y, float w, float h, float tl, float tr) : TexRect(x, y, w, h)
 {
-	setX(x);
-	setY(y);
-	setW(w);
-	setH(h);
+	// setX(x);
+	// setY(y);
+	// setW(w);
+	// setH(h);
 
 	texleft = tl;
 	texright = tr;

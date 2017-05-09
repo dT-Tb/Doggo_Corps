@@ -31,7 +31,7 @@ public:
 
 
      // These are the events we want to handle
-     void gameOver(){ gameIsOver = 1; }
+     void gameOver();
      void draw();
      void drawTitleScreen();
      void drawEndScreen();
@@ -68,8 +68,8 @@ public:
      TexRect* background;
 	TexRect* cloud;
 	Background* hills;
-	Trampoline* trampoline;
-     Chocolate* chocolate;
+	// Trampoline* trampoline;
+     // Chocolate* chocolate;
 	Doggo* doggo;
 	std::vector<Block*> blocks;
      // Title/End Objects

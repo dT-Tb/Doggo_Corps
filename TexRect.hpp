@@ -19,16 +19,23 @@
 
 class TexRect{
 private:
-    float x;
-    float y;
-    float w;
-    float h;
+    float x, defX;
+    float y, defY;
+    float w, defW;
+    float h, defH;
 
 protected:
      void setX(float a) { this->x = a; }
      void setY(float b) { this->y = b; }
      void setW(float c) { this->w = c; }
      void setH(float d) { this->h = d; }
+     void setDefaultValues(float x, float y, float w, float h)
+     {
+          defX = x;
+          defY = y;
+          defW = w;
+          defH = h;
+     }
 
 public:
     TexRect (float x=0, float y=0, float w=0.5, float h=0.5){
@@ -36,9 +43,18 @@ public:
         this->y = y;
         this->w = w;
         this->h = h;
+        setDefaultValues(x, y, w, h);
     }
 
-   virtual void draw(){
+    void reset()
+    {
+         this->x = defX;
+         this->y = defY;
+         this->w = defW;
+         this->h = defH;
+    }
+
+    virtual void draw(){
         glEnable(GL_TEXTURE_2D);
         glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
 
@@ -59,7 +75,7 @@ public:
         glEnd();
 
         glDisable(GL_TEXTURE_2D);
-    }
+     }
 
 	float getX() const { return x; }
 	float getY() const { return y; }

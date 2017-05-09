@@ -174,6 +174,26 @@ void App::drawEndScreen()
      endScreen->draw();
 }
 
+void App::gameOver()
+{
+     // Reset back to default state in the program
+     gameIsOver = 1;
+     left = 0;
+     right = 0;
+     Movement = 0;
+     texRightDir = 1;
+     texLeftDir = 0;
+
+     // Reset everything back to default positions
+     background->reset();
+     ground->reset();
+     cloud->reset();
+     hills->reset();
+     doggo->reset();
+     for(int i = 0; i < blocks.size(); i++)
+          blocks[i]->reset();
+}
+
 void App::keyPress(unsigned char key) {
 #define ESC 27
 #define SPACEBAR 32
@@ -308,13 +328,29 @@ void App::idle()
                          for(int j = 0; j < blocks.size(); j++)
                          {
                               blocks[j]->move(2);
-                              blocks[j]->event(NOT_ON_TOP, doggo);
+                              // if(blocks[j]->getTexId() == jumpBlock)
+                              // {
+                              //      blocks[j]->move(2);
+                              // }
+                              // else if(blocks[j]->getTexId() == killBlock)
+                              // {
+                              //      gameOver();
+                              // }
+                              // blocks[j]->event(NOT_ON_TOP, doggo);
                          }
      			}
                	else if(blocks[i]->getY() <= doggo->getB() && xCollision(blocks[i]))
                	{
-                         doggo->updateGroundLevel(blocks[i]->getY() + doggo->getH());
-                         blocks[i]->event(ON_TOP, doggo);
+                         // if(blocks[i]->getTexId() == jumpBlock)
+                         // {
+                         //      doggo->updateGroundLevel(blocks[i]->getY() + doggo->getH());
+                         //      doggo->isJumping = 1;
+                         // }
+                         // else if(blocks[i]->getTexId() == killBlock)
+                         // {
+                         //      gameOver();
+                         // }
+                         // blocks[i]->event(ON_TOP, doggo);
                          // doggo->isJumping = 1;
                	}
                     else
@@ -335,14 +371,29 @@ void App::idle()
                          hills->move(1);
                          for(int j = 0; j < blocks.size(); j++)
                          {
-                              blocks[j]->move(1);
-                              blocks[j]->event(NOT_ON_TOP, doggo); // The collision is not on top
+                              // if(blocks[j]->getTexId() == jumpBlock)
+                              // {
+                              //      blocks[j]->move(1);
+                              // }
+                              // else if(blocks[j]->getTexId() == killBlock)
+                              // {
+                              //      gameOver();
+                              // }
+                              // blocks[j]->event(NOT_ON_TOP, doggo); // The collision is not on top
                          }
      			}
                	else if(blocks[i]->getY() <= doggo->getB() && xCollision(blocks[i]))
                	{
-                         doggo->updateGroundLevel(blocks[i]->getY() + doggo->getH());
-                         blocks[i]->event(ON_TOP, doggo);     // The collision IS on top
+                         // if(blocks[i]->getTexId() == jumpBlock)
+                         // {
+                         //      doggo->updateGroundLevel(blocks[i]->getY() + doggo->getH());
+                         //      doggo->isJumping = 1;
+                         // }
+                         // else if(blocks[i]->getTexId() == killBlock)
+                         // {
+                         //      gameOver();
+                         // }
+                         // blocks[i]->event(ON_TOP, doggo);     // The collision IS on top
                          // doggo->isJumping = 1;
                	}
                     else

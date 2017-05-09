@@ -17,8 +17,8 @@ void Block::updateCoords(float x_update)
 void Block::move(int mov)
 {
 	if(mov == 1)
-		updateCoords(getX() + 0.018);
+		updateCoords(getX() + 0.023);
 
 	else if(mov == 2)
-		updateCoords(getX() - 0.018);
+		updateCoords(getX() - 0.023);
 }

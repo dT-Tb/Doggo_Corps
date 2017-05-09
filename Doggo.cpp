@@ -3,11 +3,6 @@
 
 Doggo::Doggo(float x, float y, float w, float h) : TexRect(x, y, w, h)
 {
-	// setX(x);
-	// setY(y);
-	// setW(w);
-	// setH(h);
-
 	yMult = MAX_JUMP_SPEED;
 	groundLevel = -0.5;
 }
@@ -39,6 +34,13 @@ void Doggo::jump()
 		Doggo::isJumping = 0;
 		jumpReset = 1;
 	}
+}
+
+void Doggo::bounce()
+{
+	jumpReset = 0;
+	isJumping = 1;
+	printf("bouncing\n");
 }
 
 void Doggo::updateGroundLevel(float glvl)

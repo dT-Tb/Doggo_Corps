@@ -15,7 +15,7 @@ public:
 
 	void updateCoords(float x_update);
 	void move(int mov);
-	virtual void event(bool top, Doggo* d) { }
+	// virtual void event(bool top, Doggo* d) { }
 
 	GLuint getTexId() const { return texture; }
 };

@@ -15,7 +15,7 @@ App::App(const char* label, int x, int y, int w, int h): GlutApp(label, x, y, w,
 	//float num1 = rand() % 20;
 	for(int i = 0; i<20; i++)
 	{
-		num.push_back(rand() % 100);
+		num.push_back(rand() % 50);
 	}
 	
 	#if defined WIN32
@@ -62,7 +62,7 @@ App::App(const char* label, int x, int y, int w, int h): GlutApp(label, x, y, w,
 
 	blocks.push_back(new Trampoline(0.25, -0.6, 0.23, 0.3, jumpBlock));
 	blocks.push_back(new Trampoline(0.9, -0.6, 0.23, 0.3, jumpBlock));
-     blocks.push_back(new Chocolate(2.3, -0.55, 0.17, 0.35, killBlock));
+     //blocks.push_back(new Chocolate(2.3, -0.55, 0.17, 0.35, killBlock));
 
 
 	//B.push_back(new Trampoline(0.25, -0.6, 0.23, 0.3));

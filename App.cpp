@@ -3,12 +3,21 @@
 #define MAX_JUMP_HEIGHT 0.9
 
 static int Movement = 0;
+static float a = 0.30;
+static float b = 2.6;
 
 App::App(const char* label, int x, int y, int w, int h): GlutApp(label, x, y, w, h){
     // Initialize state variables
     mx = 0.0;
     my = 0.0;
-
+	srand((unsigned)time(0)); //srand helps generate
+	//float num = rand() % 40; //picks numbers between 1 and 40
+	//float num1 = rand() % 20;
+	for(int i = 0; i<20; i++)
+	{
+		num.push_back(rand() % 100);
+	}
+	
 	#if defined WIN32
      // Game Environment
      floor = loadTexture("..\\resources\\ground2.bmp");
@@ -50,11 +59,26 @@ App::App(const char* label, int x, int y, int w, int h): GlutApp(label, x, y, w,
      //chocolate = new Chocolate(0.75, -0.55, 0.17, 0.35);
 	doggo = new Doggo(-0.5, -0.5, 0.25, 0.4);
 
+
 	blocks.push_back(new Trampoline(0.25, -0.6, 0.23, 0.3, jumpBlock));
 	blocks.push_back(new Trampoline(0.9, -0.6, 0.23, 0.3, jumpBlock));
      blocks.push_back(new Chocolate(2.3, -0.55, 0.17, 0.35, killBlock));
 
-     // Title/End Screen Objects
+
+	//B.push_back(new Trampoline(0.25, -0.6, 0.23, 0.3));
+	//B.push_back(new Trampoline(0.85, -0.6, 0.23, 0.3));
+	
+	for(int i = 0; i< num.size(); i++)
+	{
+		
+		blocks.push_back(new Trampoline(a +=(num[i]/22), -0.6, 0.23, 0.3,jumpBlock));
+		blocks.push_back(new Trampoline(a += (num[i]/10), -0.6, 0.23, 0.3,jumpBlock));
+		blocks.push_back(new Chocolate(b += (num[i]/15), -0.55, 0.17, 0.35, killBlock));
+		 
+		std::cout<<num[i]<<std::endl;
+	}	
+	
+     // Title/End Screen Objects 
      titleScreen = new TexRect(-1, 1,  2, 2);
      endScreen = new TexRect(-1, 1, 2, 2);
 }
@@ -208,6 +232,7 @@ void App::keyPress(unsigned char key) {
      if(gameIsOver && key == SPACEBAR) {
           started = 0;
           gameIsOver = 0;
+          hills->updateTexCoords(0,0.5);
      }
 
      if(key == 'k'){
@@ -292,7 +317,15 @@ void App::idle()
 {
      if(started)
      {
+
           doggo->gravity();
+
+          //if(doggo->dead())
+         // {
+               //printf("DOGGO IS DEAD!\n");
+               //gameOver();
+          //}
+     	doggo->gravity();
 
      	if(doggo->isJumping)
      	{
@@ -319,7 +352,7 @@ void App::idle()
      				hills->move(2);
                          if(blocks[i]->getTexId() == killBlock)
                          {
-                              gameOver();
+                             gameOver();
                          }
                          else
                          {

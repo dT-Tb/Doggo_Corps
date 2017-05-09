@@ -2,6 +2,7 @@
 #define App_h
 #include<iostream>
 #include<vector>
+#include<ctime>
 #include "GlutApp.h"
 #include "RgbImage.h"
 #include "TexRect.hpp"
@@ -72,6 +73,7 @@ public:
      // Chocolate* chocolate;
 	Doggo* doggo;
 	std::vector<Block*> blocks;
+	std::vector<float> num;
      // Title/End Objects
      TexRect* titleScreen;
      TexRect* endScreen;

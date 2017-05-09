@@ -50,6 +50,9 @@ App::App(const char* label, int x, int y, int w, int h): GlutApp(label, x, y, w,
      chocolate = new Chocolate(0.75, -0.55, 0.17, 0.35);
 	doggo = new Doggo(-0.5, -0.5, 0.3, 0.4);
 
+	B.push_back(new Trampoline(0.25, -0.6, 0.23, 0.3));
+	B.push_back(new Trampoline(0.85, -0.6, 0.23, 0.3));	
+	
      // Title/End Screen Objects
      titleScreen = new TexRect(-1, 1, 2, 2);
      // endScreen = new TexRect(-1, 1, 2, 2);

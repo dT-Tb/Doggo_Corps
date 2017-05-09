@@ -1,8 +1,9 @@
 #include "App.h"
-#include <cstdio>
 #define MAX_JUMP_HEIGHT 0.9
 
 static int Movement = 0;
+static float a = 0.30;
+static float b = 2.60;
 
 App::App(const char* label, int x, int y, int w, int h): GlutApp(label, x, y, w, h){
     // Initialize state variables
@@ -45,14 +46,32 @@ App::App(const char* label, int x, int y, int w, int h): GlutApp(label, x, y, w,
      background = new TexRect(-1, 1, 2, 2);
      ground = new TexRect(-1.0, -0.9, 2.0, 0.1);
 	cloud = new TexRect(0.05, 0.7, 0.35, 0.70);
-	hills = new Background(-1.0, -0.6, 2.0, 0.3);
-	//trampoline = new Trampoline(0.25, -0.6, 0.23, 0.3);
-     //chocolate = new Chocolate(0.75, -0.55, 0.17, 0.35);
 	doggo = new Doggo(-0.5, -0.5, 0.25, 0.4);
+     hills = new Background(-1.0, -0.6, 2.0, 0.3);
 
-	blocks.push_back(new Trampoline(0.25, -0.6, 0.23, 0.3, jumpBlock));
-	blocks.push_back(new Trampoline(0.9, -0.6, 0.23, 0.3, jumpBlock));
-     blocks.push_back(new Chocolate(2.3, -0.55, 0.17, 0.35, killBlock));
+     //trampoline = new Trampoline(0.25, -0.6, 0.23, 0.3);
+     //chocolate = new Chocolate(0.75, -0.55, 0.17, 0.35);
+	// blocks.push_back(new Trampoline(0.25, -0.6, 0.23, 0.3, jumpBlock));
+	// blocks.push_back(new Trampoline(0.9, -0.6, 0.23, 0.3, jumpBlock));
+     // blocks.push_back(new Chocolate(2.3, -0.55, 0.17, 0.35, killBlock));
+
+     srand((unsigned)time(0)); //srand helps with random generation
+	//float num = rand() % 40; //picks numbers between 1 and 40
+	//float num1 = rand() % 20;
+	for(int i = 0; i<30; i++)
+	{
+		num.push_back(rand() % 50);
+	}
+
+	for(int i = 0; i< num.size(); i++)
+	{
+
+		blocks.push_back(new Trampoline(a +=(num[i]/22.0), -0.6, 0.23, 0.3,jumpBlock));
+		blocks.push_back(new Trampoline(a += (num[i]/10.0), -0.6, 0.23, 0.3,jumpBlock));
+		blocks.push_back(new Chocolate(b += (num[i]/15.0), -0.55, 0.17, 0.35, killBlock));
+
+		//std::cout<<num[i]<<std::endl;
+	}
 
      // Title/End Screen Objects
      titleScreen = new TexRect(-1, 1,  2, 2);

@@ -2,6 +2,7 @@
 #define App_h
 #include<iostream>
 #include<vector>
+#include<ctime>
 #include "GlutApp.h"
 #include "RgbImage.h"
 #include "TexRect.hpp"
@@ -25,6 +26,8 @@ class App: public GlutApp {
      bool right = false;
      bool texLeftDir = 0;
      bool texRightDir = 1; // Default set to right
+
+     std::vector<float> num;
 public:
      // Constructor, to initialize state
      App(const char* label, int x, int y, int w, int h);
@@ -68,10 +71,9 @@ public:
      TexRect* background;
 	TexRect* cloud;
 	Background* hills;
-	// Trampoline* trampoline;
-     // Chocolate* chocolate;
 	Doggo* doggo;
 	std::vector<Block*> blocks;
+
      // Title/End Objects
      TexRect* titleScreen;
      TexRect* endScreen;

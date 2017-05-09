@@ -31,7 +31,7 @@ void Doggo::jump()
 		yMult -= MAX_JUMP_SPEED * 0.085;
 	}
 	else{
-		Doggo::isJumping = 0;
+		isJumping = 0;
 		jumpReset = 1;
 	}
 }
@@ -39,14 +39,4 @@ void Doggo::jump()
 void Doggo::updateGroundLevel(float glvl)
 {
 	groundLevel = glvl;
-}
-
-int Doggo::move(float a)
-{
-	if (a == 'a')
-		return 1;
-	if (a == 'd')
-		return 2;
-	else
-		return 0;
 }

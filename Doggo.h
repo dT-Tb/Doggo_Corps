@@ -3,7 +3,6 @@
 #define DOGGO_H
 
 #include "TexRect.hpp"
-#include <cstdio>
 
 class Doggo : public TexRect
 {
@@ -16,14 +15,10 @@ public:
 
 	Doggo(float x, float y, float w, float h);
 
-	//void updateVals(float x, float y, float w, float h); // move this to correct subclass
 	void gravity();
 	void jump();
-	void bounce();
 	void updateGroundLevel(float glvl);
 	int move(float a);
-
-	float getGLevel() const { return groundLevel; }
 };
 
 #endif

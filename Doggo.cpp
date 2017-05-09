@@ -17,7 +17,7 @@ void Doggo::gravity()
 			jumpReset = 0;
 			yMult = MAX_JUMP_SPEED;
 		}
-		
+
 		setY(groundLevel);
 	}
 
@@ -34,13 +34,6 @@ void Doggo::jump()
 		Doggo::isJumping = 0;
 		jumpReset = 1;
 	}
-}
-
-void Doggo::bounce()
-{
-	jumpReset = 0;
-	isJumping = 1;
-	printf("bouncing\n");
 }
 
 void Doggo::updateGroundLevel(float glvl)

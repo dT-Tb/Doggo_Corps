@@ -106,7 +106,7 @@ void App::draw() {
                glBindTexture(GL_TEXTURE_2D, dogRight);
           }
           doggo->draw();
-          
+
           for(int i = 0; i < blocks.size(); i++)
           {
                glBindTexture(GL_TEXTURE_2D, blocks[i]->getTexId());
@@ -286,8 +286,6 @@ template <typename T> bool App::yCollision(T* block)
           return 0;
 }
 
-// #define ON_TOP 1
-// #define NOT_ON_TOP 0
 void App::idle()
 {
      if(started)
@@ -325,29 +323,8 @@ void App::idle()
                          {
                               doggo->updateGroundLevel(blocks[i]->getY() + doggo->getH());
                               doggo->isJumping = 1;
-                              // for(int j = 0; j < blocks.size(); j++)
-                              // {
-                              //      blocks[j]->move(2);
-                              // }// end for( j )
                          } // end else ( getTexId() == killBlock )
      			} // end if ( collision check )
-
-
-               	// else if(( xCollision(blocks[i]) && yCollision(blocks[i]) ) && doggo->jumpReset)
-               	// {
-                    //      printf("top collision\n");
-                    //      if(blocks[i]->getTexId() == killBlock)
-                    //      {
-                    //           gameOver();
-                    //      }
-                    //      else
-                    //      {
-                    //           doggo->updateGroundLevel(blocks[i]->getY() + doggo->getH());
-                    //           doggo->bounce();
-                    //      }
-                    //      // blocks[i]->event(ON_TOP, doggo);
-                    //      // doggo->isJumping = 1;
-               	// }
                     else
                          doggo->updateGroundLevel(-0.5);
 
@@ -373,29 +350,8 @@ void App::idle()
                          {
                               doggo->updateGroundLevel(blocks[i]->getY() + doggo->getH());
                               doggo->isJumping = 1;
-                              // for(int j = 0; j < blocks.size(); j++)
-                              // {
-                              //      blocks[j]->move(1);
-                              // }// end for( j )
                          } // end else ( getTexId() == killBlock )
      			}// end if ( collision check )
-
-
-               	// else if(( xCollision(blocks[i]) && yCollision(blocks[i]) ) && doggo->jumpReset)
-               	// {
-                    //      printf("top collision\n");
-                    //      if(blocks[i]->getTexId() == killBlock)
-                    //      {
-                    //           gameOver();
-                    //      }
-                    //      else
-                    //      {
-                    //           doggo->updateGroundLevel(blocks[i]->getY() + doggo->getH());
-                    //           doggo->bounce();
-                    //      }
-                    //      // blocks[i]->event(ON_TOP, doggo);     // The collision IS on top
-                    //      // doggo->isJumping = 1;
-               	// }
                     else
                          doggo->updateGroundLevel(-0.5);
 

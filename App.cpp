@@ -52,7 +52,7 @@ App::App(const char* label, int x, int y, int w, int h): GlutApp(label, x, y, w,
 
 	blocks.push_back(new Trampoline(0.25, -0.6, 0.23, 0.3, jumpBlock));
 	blocks.push_back(new Trampoline(0.9, -0.6, 0.23, 0.3, jumpBlock));
-     blocks.push_back(new Chocolate(1.4, -0.55, 0.17, 0.35, killBlock));
+     blocks.push_back(new Chocolate(1.7, -0.55, 0.17, 0.35, killBlock));
 
      // Title/End Screen Objects
      titleScreen = new TexRect(-1, 1,  2, 2);
@@ -320,36 +320,37 @@ void App::idle()
      		for(int i = 0; i < blocks.size(); i++)
      		{
      			blocks[i]->move(Movement);
-                    // chocolate->move(Movement);
 
      			if (xCollision(blocks[i]) && yCollision(blocks[i]))
      			{
      				hills->move(2);
-                         for(int j = 0; j < blocks.size(); j++)
+                         if(blocks[i]->getTexId() == killBlock)
                          {
-                              blocks[j]->move(2);
-                              // if(blocks[j]->getTexId() == jumpBlock)
-                              // {
-                              //      blocks[j]->move(2);
-                              // }
-                              // else if(blocks[j]->getTexId() == killBlock)
-                              // {
-                              //      gameOver();
-                              // }
-                              // blocks[j]->event(NOT_ON_TOP, doggo);
+                              gameOver();
                          }
-     			}
+                         else
+                         {
+                              for(int j = 0; j < blocks.size(); j++)
+                              {
+                                   blocks[j]->move(2);
+                              }// end for( j )
+                         } // end else ( getTexId() == killBlock )
+     			} // end if ( collision check )
                	else if(blocks[i]->getY() <= doggo->getB() && xCollision(blocks[i]))
                	{
-                         // if(blocks[i]->getTexId() == jumpBlock)
-                         // {
-                         //      doggo->updateGroundLevel(blocks[i]->getY() + doggo->getH());
-                         //      doggo->isJumping = 1;
-                         // }
-                         // else if(blocks[i]->getTexId() == killBlock)
-                         // {
-                         //      gameOver();
-                         // }
+                         if(blocks[i]->getTexId() == jumpBlock)
+                         {
+                              // printf("jumpBlock: %d\n", i);
+                              printf("%d\n", blocks[i]->getTexId());
+                              doggo->updateGroundLevel(blocks[i]->getY() + doggo->getH());
+                              doggo->isJumping = 1;
+                         }
+                         else if(blocks[i]->getTexId() == killBlock)
+                         {
+                              //gameOver();
+                              printf("%d\n", blocks[i]->getTexId());
+                              // printf("killBlock: %d\n", i);
+                         }
                          // blocks[i]->event(ON_TOP, doggo);
                          // doggo->isJumping = 1;
                	}
@@ -364,35 +365,37 @@ void App::idle()
      		for(int i = 0; i < blocks.size(); i++)
      		{
      			blocks[i]->move(Movement);
-                    // chocolate->move(Movement);
 
      			if (xCollision(blocks[i]) && yCollision(blocks[i]))
      			{
                          hills->move(1);
-                         for(int j = 0; j < blocks.size(); j++)
+                         if(blocks[i]->getTexId() == killBlock)
                          {
-                              // if(blocks[j]->getTexId() == jumpBlock)
-                              // {
-                              //      blocks[j]->move(1);
-                              // }
-                              // else if(blocks[j]->getTexId() == killBlock)
-                              // {
-                              //      gameOver();
-                              // }
-                              // blocks[j]->event(NOT_ON_TOP, doggo); // The collision is not on top
+                              gameOver();
                          }
-     			}
+                         else
+                         {
+                              for(int j = 0; j < blocks.size(); j++)
+                              {
+                                   blocks[j]->move(1);
+                              }// end for( j )
+                         } // end else ( getTexId() == killBlock )
+     			}// end if ( collision check )
                	else if(blocks[i]->getY() <= doggo->getB() && xCollision(blocks[i]))
                	{
-                         // if(blocks[i]->getTexId() == jumpBlock)
-                         // {
-                         //      doggo->updateGroundLevel(blocks[i]->getY() + doggo->getH());
-                         //      doggo->isJumping = 1;
-                         // }
-                         // else if(blocks[i]->getTexId() == killBlock)
-                         // {
-                         //      gameOver();
-                         // }
+                         if(blocks[i]->getTexId() == jumpBlock)
+                         {
+                              doggo->updateGroundLevel(blocks[i]->getY() + doggo->getH());
+                              doggo->isJumping = 1;
+                              // printf("jumpBlock: %d\n", i);
+                              printf("%d\n", blocks[i]->getTexId());
+                         }
+                         else if(blocks[i]->getTexId() == killBlock)
+                         {
+                              printf("%d\n", blocks[i]->getTexId());
+                              //gameOver();
+                              // printf("killBlock: %d\n", i);
+                         }
                          // blocks[i]->event(ON_TOP, doggo);     // The collision IS on top
                          // doggo->isJumping = 1;
                	}
@@ -404,6 +407,9 @@ void App::idle()
 
 	redraw();
 } // idle() end function
+
+
+
 
 
 

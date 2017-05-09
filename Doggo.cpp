@@ -10,14 +10,14 @@ Doggo::Doggo(float x, float y, float w, float h) : TexRect(x, y, w, h)
 void Doggo::gravity()
 {
 	setY(getY() - 0.03);
-	if (getY() <= groundLevel)
+	if ( getY() <= (groundLevel + 0.03) && getY() >= (groundLevel - 0.03) )
 	{
 		if (jumpReset)
 		{
 			jumpReset = 0;
 			yMult = MAX_JUMP_SPEED;
 		}
-
+		
 		setY(groundLevel);
 	}
 

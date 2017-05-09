@@ -22,6 +22,8 @@ class App: public GlutApp {
      //boolean flags to denote movement
      bool left = false;
      bool right = false;
+     bool texLeftDir = 0;
+     bool texRightDir = 1; // Default set to right
 public:
      // Constructor, to initialize state
      App(const char* label, int x, int y, int w, int h);
@@ -53,7 +55,8 @@ public:
 	GLuint bkgdHills;
 	GLuint jumpBlock;
      GLuint killBlock;
-	GLuint dog;
+	GLuint dogLeft;
+     GLuint dogRight;
 
      // Title/End Screens
      GLuint title;

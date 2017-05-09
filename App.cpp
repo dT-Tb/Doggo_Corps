@@ -17,7 +17,8 @@ App::App(const char* label, int x, int y, int w, int h): GlutApp(label, x, y, w,
 	bkgdHills = loadTexture("..\\resources\\bkgdHills.bmp");
 	jumpBlock = loadTexture("..\\resources\\wall.bmp");
      killBlock = loadTexture("..\\resources\\chocolate.bmp");
-	dog = loadTexture("..\\resources\\doggo.bmp");
+     dogLeft = loadTexture("..\\resources\\doggo_2.bmp");
+	dogRight = loadTexture("..\\resources\\doggo.bmp");
 
      // Title/End Screens
      title = loadTexture("..\\resources\\title_screen_1.bmp");
@@ -31,7 +32,8 @@ App::App(const char* label, int x, int y, int w, int h): GlutApp(label, x, y, w,
 	bkgdHills = loadTexture("resources/bkgdHills.bmp");
 	jumpBlock = loadTexture("resources/trampoline.bmp");
      killBlock = loadTexture("resources/chocolate.bmp");
-     dog = loadTexture("resources/doggo.bmp");
+     dogRight = loadTexture("resources/doggo.bmp");
+     dogLeft = loadTexture("resources/doggo_2.bmp");
 
      // Title/End Screens
      title = loadTexture("resources/title_screen_1.bmp");
@@ -99,8 +101,13 @@ void App::draw() {
           glBindTexture(GL_TEXTURE_2D, killBlock);
           chocolate->draw();
 
-     	glBindTexture(GL_TEXTURE_2D, dog);
-     	doggo->draw();
+          if(texLeftDir){
+               glBindTexture(GL_TEXTURE_2D, dogLeft);
+          }
+          else if(texRightDir){
+               glBindTexture(GL_TEXTURE_2D, dogRight);
+          }
+          doggo->draw();
 
           glBindTexture( GL_TEXTURE_2D, floor );
           ground->draw();
@@ -189,12 +196,8 @@ void App::specialKeyPress(int key)
 		left = true;
 		right = false;
 		Movement = 1;
-
-          #if defined WIN32
-          dog = loadTexture("..\\resources\\Doggo_2.bmp");
-          #else
-          dog = loadTexture("resources/Doggo_2.bmp");
-          #endif
+          texLeftDir = 1;
+          texRightDir = 0;
 	}
 
      if(key == GLUT_KEY_RIGHT && !right)
@@ -202,12 +205,8 @@ void App::specialKeyPress(int key)
 		right = true;
 		left = false;
 		Movement = 2;
-
-          #if defined WIN32
-          dog = loadTexture("..\\resources\\doggo.bmp");
-          #else
-          dog = loadTexture("resources/doggo.bmp");
-          #endif
+          texLeftDir = 0;
+          texRightDir = 1;
 	}
 
 	if(key == GLUT_KEY_DOWN)
@@ -275,15 +274,14 @@ void App::idle()
 
      	if (left)
      	{
-
      		hills->move(Movement);
-     		trampoline->updateCoords(trampoline->getX() + 0.01);
-               chocolate->updateCoords(chocolate->getX() + 0.01);
+     		trampoline->updateCoords(trampoline->getX() + 0.035);
+               chocolate->updateCoords(chocolate->getX() + 0.035);
 
      		if (xCollision(trampoline) && yCollision(trampoline))
      		{
-     			hills->updateTexCoords(hills->getTL() + 0.005, hills->getTR() + 0.005);
-                    trampoline->updateCoords(trampoline->getX() - 0.01);
+     			hills->move(2);//updateTexCoords(hills->getTL() + 0.005, hills->getTR() + 0.005);
+                    trampoline->updateCoords(trampoline->getX() - 0.035);
      		}
                else if(trampoline->getY() <= doggo->getB() && xCollision(trampoline))
                {
@@ -297,21 +295,13 @@ void App::idle()
      	if (right)
      	{
      		hills->move(Movement);
-     		trampoline->updateCoords(trampoline->getX() - 0.01);
-               chocolate->updateCoords(chocolate->getX() - 0.01);
+     		trampoline->updateCoords(trampoline->getX() - 0.035);
+               chocolate->updateCoords(chocolate->getX() - 0.035);
 
      		if (xCollision(trampoline) && yCollision(trampoline))
      		{
-                    hills->updateTexCoords(hills->getTL() - 0.005, hills->getTR() - 0.005);
-     			trampoline->updateCoords(trampoline->getX() + 0.01);
-
-     			// if (doggo->isJumping){
-     			// 	doggo->setY(trampoline->getY() + doggo->getH());
-     			// }
-     			// else {
-     			// 	hills->updateTexCoords(hills->getTL() - 0.005, hills->getTR() - 0.005);
-     			// 	trampoline->updateCoords(trampoline->getX());
-     			// }
+                    hills->move(1);//updateTexCoords(hills->getTL() - 0.005, hills->getTR() - 0.005);
+     			trampoline->updateCoords(trampoline->getX() + 0.035);
      		}
                else if(trampoline->getY() <= doggo->getB() && xCollision(trampoline))
                {

@@ -44,8 +44,8 @@ void Background::draw()
 void Background::move(int m)
 {
 	if(m == 1)
-		updateTexCoords(getTL() - 0.005, getTR() - 0.005);
+		updateTexCoords(getTL() - 0.01, getTR() - 0.01);
 
 	else if(m == 2)
-		updateTexCoords(getTL() + 0.005, getTR() + 0.005);
+		updateTexCoords(getTL() + 0.01, getTR() + 0.01);
 }

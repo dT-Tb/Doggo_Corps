@@ -47,14 +47,15 @@ App::App(const char* label, int x, int y, int w, int h): GlutApp(label, x, y, w,
 	cloud = new TexRect(0.05, 0.7, 0.35, 0.70);
 	hills = new Background(-1.0, -0.6, 2.0, 0.3);
 	//trampoline = new Trampoline(0.25, -0.6, 0.23, 0.3);
-     chocolate = new Chocolate(0.75, -0.55, 0.17, 0.35);
+     //chocolate = new Chocolate(0.75, -0.55, 0.17, 0.35);
 	doggo = new Doggo(-0.5, -0.5, 0.3, 0.4);
 
-	B.push_back(new Trampoline(0.25, -0.6, 0.23, 0.3));
-	B.push_back(new Trampoline(0.85, -0.6, 0.23, 0.3));
+	blocks.push_back(new Trampoline(0.25, -0.6, 0.23, 0.3, jumpBlock));
+	blocks.push_back(new Trampoline(0.9, -0.6, 0.23, 0.3, jumpBlock));
+     blocks.push_back(new Chocolate(1.4, -0.55, 0.17, 0.35, killBlock));
 
      // Title/End Screen Objects
-     titleScreen = new TexRect(-1, 1, 2, 2);
+     titleScreen = new TexRect(-1, 1,  2, 2);
      // endScreen = new TexRect(-1, 1, 2, 2);
 }
 
@@ -98,14 +99,14 @@ void App::draw() {
     }
     else if(!gameIsOver)
     {
-    	     for(int i = 0; i < B.size(); i++)
+    	     for(int i = 0; i < blocks.size(); i++)
     	     {
-     		glBindTexture(GL_TEXTURE_2D, jumpBlock);
-     		B[i]->draw();
+     		glBindTexture(GL_TEXTURE_2D, blocks[i]->getTexId());
+     		blocks[i]->draw();
           }
 
-          glBindTexture(GL_TEXTURE_2D, killBlock);
-          chocolate->draw();
+          // glBindTexture(GL_TEXTURE_2D, killBlock);
+          // chocolate->draw();
 
           if(texLeftDir){
                glBindTexture(GL_TEXTURE_2D, dogLeft);
@@ -251,7 +252,7 @@ template <typename T> bool App::xCollision(T* block)
      }
 }
 
-template <typename T> bool App::yCollision(T*block)
+template <typename T> bool App::yCollision(T* block)
 {
      if(doggo->getB() <= block->getY())
           return 1;
@@ -259,10 +260,16 @@ template <typename T> bool App::yCollision(T*block)
           return 0;
 }
 
+#define ON_TOP 1
+#define NOT_ON_TOP 0
 void App::idle()
 {
      if(started)
      {
+          if(doggo->dead())
+          {
+               printf("DOGGO IS DEAD!\n");
+          }
      	doggo->gravity();
 
      	if(doggo->isJumping)
@@ -281,23 +288,25 @@ void App::idle()
           if (left)
      	{
      		hills->move(Movement);
-     		for(int i = 0; i < B.size(); i++)
+     		for(int i = 0; i < blocks.size(); i++)
      		{
-     			B[i]->move(Movement);
-                    chocolate->move(Movement);
+     			blocks[i]->move(Movement);
+                    // chocolate->move(Movement);
 
-     			if (xCollision(B[i]) && yCollision(B[i]))
+     			if (xCollision(blocks[i]) && yCollision(blocks[i]))
      			{
      				hills->move(2);
-                         for(int j = 0; j < B.size(); j++)
+                         for(int j = 0; j < blocks.size(); j++)
                          {
-                              B[j]->move(2);
+                              blocks[j]->move(2);
+                              blocks[j]->event(NOT_ON_TOP, doggo);
                          }
      			}
-               	else if(B[i]->getY() <= doggo->getB() && xCollision(B[i]))
+               	else if(blocks[i]->getY() <= doggo->getB() && xCollision(blocks[i]))
                	{
-                         doggo->updateGroundLevel(B[i]->getY() + doggo->getH());
-                         doggo->isJumping = 1;
+                         doggo->updateGroundLevel(blocks[i]->getY() + doggo->getH());
+                         blocks[i]->event(ON_TOP, doggo);
+                         // doggo->isJumping = 1;
                	}
                     else
                          doggo->updateGroundLevel(-0.5);
@@ -307,23 +316,25 @@ void App::idle()
      	if (right)
      	{
      		hills->move(Movement);
-     		for(int i = 0; i < B.size(); i++)
+     		for(int i = 0; i < blocks.size(); i++)
      		{
-     			B[i]->move(Movement);
-                    chocolate->move(Movement);
+     			blocks[i]->move(Movement);
+                    // chocolate->move(Movement);
 
-     			if (xCollision(B[i]) && yCollision(B[i]))
+     			if (xCollision(blocks[i]) && yCollision(blocks[i]))
      			{
                          hills->move(1);
-                         for(int j = 0; j < B.size(); j++)
+                         for(int j = 0; j < blocks.size(); j++)
                          {
-                              B[j]->move(1);
+                              blocks[j]->move(1);
+                              blocks[j]->event(NOT_ON_TOP, doggo); // The collision is not on top
                          }
      			}
-               	else if(B[i]->getY() <= doggo->getB() && xCollision(B[i]))
+               	else if(blocks[i]->getY() <= doggo->getB() && xCollision(blocks[i]))
                	{
-                         doggo->updateGroundLevel(B[i]->getY() + doggo->getH());
-                         doggo->isJumping = 1;
+                         doggo->updateGroundLevel(blocks[i]->getY() + doggo->getH());
+                         blocks[i]->event(ON_TOP, doggo);     // The collision IS on top
+                         // doggo->isJumping = 1;
                	}
                     else
                          doggo->updateGroundLevel(-0.5);

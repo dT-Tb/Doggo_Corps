@@ -1,11 +1,12 @@
 #include "Block.h"
 
-Block::Block(float x, float y, float w, float h) : TexRect(x, y, w, h)
+Block::Block(float x, float y, float w, float h, GLuint texture) : TexRect(x, y, w, h)
 {
 	setX(x);
 	setY(y);
 	setW(w);
 	setH(h);
+	this->texture = texture;
 }
 
 void Block::updateCoords(float x_update)

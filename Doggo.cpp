@@ -36,7 +36,7 @@ void Doggo::jump()
 		yMult -= MAX_JUMP_SPEED * 0.085;
 	}
 	else{
-		isJumping = 0;
+		Doggo::isJumping = 0;
 		jumpReset = 1;
 	}
 }

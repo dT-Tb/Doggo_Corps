@@ -1,1 +1,1 @@
-Chocolate.o: Chocolate.cpp Chocolate.h Block.h Background.h TexRect.hpp
+Chocolate.o: Chocolate.cpp Chocolate.h Block.h TexRect.hpp Doggo.h

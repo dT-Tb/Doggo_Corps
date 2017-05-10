@@ -1,1 +1,1 @@
-Block.o: Block.cpp Block.h TexRect.hpp Doggo.h
+Block.o: Block.cpp Block.h TexRect.hpp

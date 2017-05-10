@@ -49,18 +49,11 @@ App::App(const char* label, int x, int y, int w, int h): GlutApp(label, x, y, w,
 	doggo = new Doggo(-0.5, -0.5, 0.25, 0.4);
      hills = new Background(-1.0, -0.6, 2.0, 0.3);
 
-     //trampoline = new Trampoline(0.25, -0.6, 0.23, 0.3);
-     //chocolate = new Chocolate(0.75, -0.55, 0.17, 0.35);
-	// blocks.push_back(new Trampoline(0.25, -0.6, 0.23, 0.3, jumpBlock));
-	// blocks.push_back(new Trampoline(0.9, -0.6, 0.23, 0.3, jumpBlock));
-     // blocks.push_back(new Chocolate(2.3, -0.55, 0.17, 0.35, killBlock));
-
      srand((unsigned)time(0)); //srand helps with random generation
-	//float num = rand() % 40; //picks numbers between 1 and 40
-	//float num1 = rand() % 20;
+
 	for(int i = 0; i<30; i++)
 	{
-		num.push_back(rand() % 50);
+		num.push_back(rand() % 50); // Random numbers between 0 & 50
 	}
 
 	for(int i = 0; i< num.size(); i++)
@@ -69,7 +62,7 @@ App::App(const char* label, int x, int y, int w, int h): GlutApp(label, x, y, w,
 		blocks.push_back(new Trampoline(a +=(num[i]/22.3), -0.6, 0.23, 0.3,jumpBlock));
           blocks.push_back(new Chocolate(b += (num[i]/16.9), -0.55, 0.17, 0.35, killBlock));
 		blocks.push_back(new Trampoline(a += (num[i]/10.2), -0.6, 0.23, 0.3,jumpBlock));
-          blocks.push_back(new Chocolate(b += (num[i]/4.7), -0.55, 0.17, 0.35, killBlock));
+          blocks.push_back(new Chocolate(b += (num[i]/13.4), -0.55, 0.17, 0.35, killBlock));
 	}
 
      // Title/End Screen Objects
@@ -345,8 +338,6 @@ void App::idle()
      			} // end if ( collision check )
                     else
                          doggo->updateGroundLevel(-0.5);
-
-
      		}// for end
      	} // end if(left)
 
@@ -372,8 +363,6 @@ void App::idle()
      			}// end if ( collision check )
                     else
                          doggo->updateGroundLevel(-0.5);
-
-
           	} // end for
 		} // end if(right)
 	} // end if(started)

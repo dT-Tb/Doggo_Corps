@@ -3,6 +3,7 @@
 #include<iostream>
 #include<vector>
 #include<ctime>
+
 #include "GlutApp.h"
 #include "RgbImage.h"
 #include "TexRect.hpp"
@@ -27,7 +28,6 @@ class App: public GlutApp {
      bool texLeftDir = 0;
      bool texRightDir = 1; // Default set to right
 
-     std::vector<float> num;
 public:
      // Constructor, to initialize state
      App(const char* label, int x, int y, int w, int h);
@@ -73,6 +73,7 @@ public:
 	Background* hills;
 	Doggo* doggo;
 	std::vector<Block*> blocks;
+     std::vector<float> num;       // For the number of Block objects and rnjesus
 
      // Title/End Objects
      TexRect* titleScreen;

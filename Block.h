@@ -3,8 +3,6 @@
 #define BLOCK_H
 
 #include "TexRect.hpp"
-#include "Doggo.h"
-#include <cstdio>
 
 class Block : public TexRect
 {
